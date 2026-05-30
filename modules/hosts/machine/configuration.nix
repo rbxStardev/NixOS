@@ -9,7 +9,11 @@
     ];
   };
 
-  flake.nixosModules.hostMachine = {pkgs, ...}: {
+  flake.nixosModules.hostMachine = {
+    pkgs,
+    config,
+    ...
+  }: {
     imports = [
       self.nixosModules.base
       self.nixosModules.general
@@ -21,14 +25,23 @@
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
 
-      loader.grub.enable = true;
-      loader.grub.efiSupport = true;
-      loader.grub.efiInstallAsRemovable = true;
+      loader.limine.enable = true;
+      loader.limine.efiSupport = true;
+      loader.efi.canTouchEfiVariables = true;
 
       supportedFilesystems.ntfs = true;
 
-      kernelParams = ["quiet"];
-      kernelModules = ["rtw89_8852be" "k10temp" "cpuid" "v4l2loopback"];
+      kernelParams = [
+        "quiet"
+        "splash"
+        "loglevel=3"
+        "rd.systemd.show_status=false"
+        "rd.udev.log_level=3"
+        "udev.log_priority=3"
+        "amd_pstate=active"
+        "asus_wmi"
+      ];
+      kernelModules = ["rtw89_8852be" "k10temp" "cpuid" "v4l2loopback" "tcp_bbr"];
 
       binfmt.emulatedSystems = ["aarch64-linux"];
     };
@@ -37,7 +50,16 @@
 
     networking = {
       hostName = "machine";
-      networkmanager.enable = true;
+      networkmanager = {
+        enable = true;
+        wifi.powersave = true;
+      };
+    };
+
+    boot.kernel.sysctl = {
+      "net.ipv4.tcp_congestion_control" = "bbr";
+
+      "net.core.default_qdisc" = "fq";
     };
 
     virtualisation.libvirtd.enable = true;
@@ -68,12 +90,26 @@
 
     hardware.graphics.enable = true;
 
+    hardware.nvidia = {
+      powerManagement.enable = true;
+
+      open = false;
+
+      nvidiaSettings = true;
+
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+
     networking.firewall.enable = true;
     programs.appimage.enable = true;
     programs.appimage.binfmt = true;
 
-    # ADD BACK LATER -> services.xserver.videoDrivers = ["nvidia"];
-    # ADD BACK LATER -> boot.initrd.kernelModules = ["nvidia"];
+    services.xserver.videoDrivers = ["nvidia"];
+    boot.initrd.kernelModules = ["nvidia"];
+
+    services.supergfxd.enable = true;
+    systemd.services.supergfxd.path = [pkgs.pciutils];
+    services.asusd.enable = true;
 
     programs.obs-studio = {
       enable = true;

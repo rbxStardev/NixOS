@@ -1,11 +1,23 @@
 {self, ...}: {
-  flake.nixosModules.desktop = {pkgs, ...}: {
+  flake.nixosModules.desktop = {pkgs, ...}: let
+    selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
+  in {
     imports = [
       self.nixosModules.gtk
 
       self.nixosModules.pipewire
       self.nixosModules.firefox
       self.nixosModules.chromium
+    ];
+
+    programs.hyprland.enable = true;
+    programs.hyprland.package = selfpkgs.hyprland;
+
+    preferences.autostart = [selfpkgs.noctalia-shell];
+
+    environment.systemPackages = [
+      selfpkgs.terminal
+      selfpkgs.noctalia-shell
     ];
 
     fonts.packages = with pkgs; [
@@ -46,9 +58,9 @@
       bluetooth.enable = true;
       bluetooth.powerOnBoot = true;
 
-      opengl = {
+      graphics = {
         enable = true;
-        driSupport32Bit = true;
+        enable32Bit = true;
       };
     };
   };

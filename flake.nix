@@ -27,5 +27,8 @@
 
     mkFlake = inputs.flake-parts.lib.mkFlake {inherit inputs;};
   in
-    mkFlake {imports = importTree ./.;};
+    mkFlake {
+      imports = importTree ./.;
+      debug = true;
+    };
 }

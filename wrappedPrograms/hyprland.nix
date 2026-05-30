@@ -5,10 +5,14 @@
       package = pkgs.hyprland;
       runtimeInputs = with pkgs; [
         hypridle
+        wl-clipboard
+        cliphist
+        brightnessctl
+        thunar
+        thunar-archive-plugin
+        xarchiver
       ];
-      env = {
-        "NIXOS_OZONE_WL" = "1";
-      };
+      env.NIXOS_OZONE_WL = "1";
     };
   };
 }

@@ -1,5 +1,9 @@
-{self, ...}: {
-  flake.wrappersModules.noctalia-shell = {config, ...}: {
+{
+  self,
+  config,
+  ...
+}: {
+  flake.wrappersModules.noctalia-shell = {...}: {
     settings = {
       wallpaper = {
         enabled = true;

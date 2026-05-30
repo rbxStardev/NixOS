@@ -8,11 +8,8 @@
       self.nixosModules.pipewire
       self.nixosModules.firefox
       self.nixosModules.chromium
+      self.nixosModules.hyprland
     ];
-
-    programs.hyprland.enable = true;
-    programs.hyprland.package = selfpkgs.hyprland;
-
     preferences.autostart = [selfpkgs.noctalia-shell];
 
     environment.systemPackages = [

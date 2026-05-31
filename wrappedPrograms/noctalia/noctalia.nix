@@ -7,7 +7,11 @@
     package = pkgs.noctalia-shell.overrideAttrs {
       name = "starnoctalia";
     };
+
+    outOfStoreConfig = "~/.config/noctalia-shell";
+
     env.NOCTALIA_CACHE_DIR = "/tmp/star-noctalia-cache";
+
     colors = {
       mError = "#fb4934";
       mHover = "#83a598";

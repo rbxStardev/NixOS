@@ -48,6 +48,10 @@
 
     boot.plymouth.enable = true;
 
+    services.displayManager.sddm = {
+      enable = true;
+    };
+
     networking = {
       hostName = "machine";
       networkmanager = {

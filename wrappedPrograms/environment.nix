@@ -41,6 +41,7 @@
           pkgs.htop
           pkgs.btop
           pkgs.eza
+          pkgs.bat
           pkgs.fd
           pkgs.ripgrep
           pkgs.fastfetch

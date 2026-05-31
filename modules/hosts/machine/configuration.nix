@@ -83,10 +83,27 @@
     environment.systemPackages = with pkgs; [
       winetricks
       glib
+
+      qt6Packages.qt5compat
+      qt6Packages.qtdeclarative
+      qt6Packages.qtsvg
+      qt6Packages.qtwayland
     ];
 
-    xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
-    xdg.portal.enable = true;
+    environment.sessionVariables = {
+      QML_IMPORT_PATH = ["/run/current-system/sw/lib/qt-6/qml"];
+      QML2_IMPORT_PATH = ["/run/current-system/sw/lib/qt-6/qml"];
+    };
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [pkgs.xdg-desktop-portal-gtk];
+
+      config = {
+        common.default = ["gtk"];
+        hyprland.default = ["hyprland" "gtk"];
+      };
+    };
 
     hardware.graphics.enable = true;
 

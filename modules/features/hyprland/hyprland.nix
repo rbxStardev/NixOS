@@ -7,8 +7,11 @@
     selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
     user = config.preferences.user.name;
   in {
-    programs.hyprland.enable = true;
-    programs.hyprland.package = selfpkgs.hyprland;
+    programs.hyprland = {
+      enable = true;
+      package = selfpkgs.hyprland;
+      withUWSM = true;
+    };
 
     hjem.users.${user}.files = {
       ".config/hypr/hyprland.lua".source = ./hyprland.lua;

@@ -1,7 +1,2 @@
 machine.qcow2
 result
-/modules/features/assets/sounds/*
-!/modules/features/assets/sounds/.gitkeep
-/modules/features/assets/wallpapers/*
-!/modules/features/assets/wallpapers/.gitkeep
-/modules/features/assets/face.png

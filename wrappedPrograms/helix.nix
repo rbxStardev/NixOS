@@ -130,24 +130,6 @@
       (inputs.wrappers.wrapperModules.helix.apply {
         inherit pkgs;
         imports = [self.wrappersModules.helix];
-        extraPackages = [
-          pkgs.nil
-          pkgs.nixd
-          pkgs.alejandra
-          pkgs.marksman
-          pkgs.csharp-ls
-          pkgs.csharpier
-          pkgs.netcoredbg
-          pkgs.lemminx
-          pkgs.bash-language-server
-          pkgs.shellcheck
-          pkgs.shfmt
-          pkgs.taplo
-          pkgs.glsl_analyzer
-          pkgs.lua-language-server
-          pkgs.stylua
-          pkgs.qt6Packages.qtdeclarative
-        ];
       }).wrapper;
   };
 }

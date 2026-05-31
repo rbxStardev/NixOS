@@ -8,7 +8,7 @@
       name = "starnoctalia";
     };
 
-    outOfStoreConfig = "~/.config/noctalia-shell";
+    #outOfStoreConfig = "~/.config/noctalia-shell";
 
     env.NOCTALIA_CACHE_DIR = "/tmp/star-noctalia-cache";
 

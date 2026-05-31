@@ -126,6 +126,7 @@
     programs.appimage.binfmt = true;
 
     services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.enable = true;
     boot.initrd.kernelModules = ["nvidia"];
 
     services.supergfxd.enable = true;

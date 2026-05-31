@@ -17,6 +17,11 @@
       selfpkgs.noctalia-shell
     ];
 
+    environment.sessionVariables = {
+      QT_IM_MODULE = "fcitx";
+      XMODIFIERS = "@im=fcitx";
+    };
+
     fonts.packages = with pkgs; [
       nerd-fonts.jetbrains-mono
       ubuntu-sans
@@ -43,6 +48,14 @@
       LC_PAPER = "pt_BR.UTF-8";
       LC_TELEPHONE = "pt_BR.UTF-8";
       LC_TIME = "pt_BR.UTF-8";
+    };
+
+    console.keyMap = "br-abnt2";
+
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.addons = with pkgs; [fcitx5-gtk];
     };
 
     services.upower.enable = true;

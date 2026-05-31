@@ -4,7 +4,7 @@
   ...
 }: {
   flake.wrappersModules.noctalia-shell = {pkgs, ...}: {
-    package = pkgs.noctalia-shell.overrideAttrs {
+    package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
       name = "starnoctalia";
     };
 

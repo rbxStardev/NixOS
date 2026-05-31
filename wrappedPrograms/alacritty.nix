@@ -13,8 +13,13 @@
       default = "";
     };
     config = {
-      args = lib.mkAfter (lib.optionals (config.shell != "") [config.shell]);
+      #args = lib.mkAfter (lib.optionals (config.shell != "") [config.shell]);
       settings = {
+        terminal = lib.mkIf (config.shell != "") {
+          shell = {
+            program = config.shell;
+          };
+        };
         font = {
           bold = {
             family = "JetBrainsMono Nerd Font";

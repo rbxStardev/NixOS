@@ -49,10 +49,12 @@
           pkgs.ffmpeg-full
           pkgs.yt-dlp
           pkgs.lazygit
+          pkgs.yazi
 
           # wrapper
           self'.packages.git
           self'.packages.nix-check-bin
+          self'.packages.helix
         ];
         env = {
           EDITOR = lib.getExe self'.packages.helix;

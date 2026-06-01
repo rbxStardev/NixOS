@@ -51,6 +51,7 @@
           pkgs.yt-dlp
           pkgs.lazygit
           pkgs.yazi
+          pkgs.starship
 
           # wrapper
           self'.packages.git

@@ -5,7 +5,7 @@
 }: {
   flake.wrappersModules.helix = {...}: {
     settings = {
-      theme = "noctalia";
+      theme = "gruvbox_dark_hard";
       editor = {
         bufferline = "multiple";
         color-modes = true;

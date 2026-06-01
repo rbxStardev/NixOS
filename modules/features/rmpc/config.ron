@@ -1,0 +1,37 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+#![enable(unwrap_variant_newtypes)]
+(
+    address: "127.0.0.1:6600",
+    theme: "gruvbox",
+    
+    album_art: (
+        method: Kitty,
+        max_size_px: (width: 0, height: 0),
+        vertical_align: Top,
+        horizontal_align: Center,
+    ),
+    
+    volume_step: 5,
+    scrolloff: 2,
+    enable_mouse: true,
+    enable_config_hot_reload: true,
+    
+    tabs: [
+        (
+            name: "Queue",
+            border_type: None,
+            pane: Pane(Queue),
+        ),
+        (
+            name: "Directories",
+            border_type: None,
+            pane: Pane(Directories),
+        ),
+        (
+            name: "Artists",
+            border_type: None,
+            pane: Pane(Artists),
+        ),
+    ]
+)

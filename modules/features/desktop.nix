@@ -12,6 +12,7 @@
       self.nixosModules.pipewire
       self.nixosModules.firefox
       self.nixosModules.chromium
+      self.nixosModules.discord
       self.nixosModules.hyprland
       self.nixosModules.locale
       self.nixosModules.fonts

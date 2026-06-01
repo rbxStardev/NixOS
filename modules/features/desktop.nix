@@ -13,6 +13,7 @@
       self.nixosModules.firefox
       self.nixosModules.chromium
       self.nixosModules.discord
+      self.nixosModules.gaming
       self.nixosModules.hyprland
       self.nixosModules.locale
       self.nixosModules.fonts

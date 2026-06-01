@@ -20,45 +20,6 @@
       (inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = self'.packages.zsh;
-        runtimeInputs = [
-          # nix
-          pkgs.nil
-          pkgs.nixd
-          pkgs.statix
-          pkgs.alejandra
-          pkgs.manix
-          pkgs.nix-inspect
-          self'.packages.nh
-
-          # other
-          pkgs.file
-          pkgs.unzip
-          pkgs.zip
-          pkgs.p7zip
-          pkgs.wget
-          pkgs.killall
-          pkgs.fzf
-          pkgs.htop
-          pkgs.btop
-          pkgs.eza
-          pkgs.bat
-          pkgs.fd
-          pkgs.ripgrep
-          pkgs.fastfetch
-          pkgs.tree-sitter
-          pkgs.imagemagick
-          pkgs.ffmpeg-full
-          pkgs.yt-dlp
-          pkgs.lazygit
-          pkgs.starship
-
-          # wrapper
-          self'.packages.git
-          self'.packages.nix-check-bin
-          self'.packages.helix
-          self'.packages.yazi
-          self'.packages.rmpc
-        ];
         env = {
           EDITOR = lib.getExe self'.packages.helix;
         };

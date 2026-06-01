@@ -9,11 +9,7 @@
     ];
   };
 
-  flake.nixosModules.hostMachine = {
-    pkgs,
-    config,
-    ...
-  }: {
+  flake.nixosModules.hostMachine = {pkgs, ...}: {
     imports = [
       self.nixosModules.base
       self.nixosModules.general
@@ -22,6 +18,9 @@
       self.nixosModules.powersave
 
       self.nixosModules.sddm-astronaut
+
+      self.nixosModules.nvidia
+      self.nixosModules.asus
     ];
 
     boot = {
@@ -124,16 +123,6 @@
 
     hardware.graphics.enable = true;
 
-    hardware.nvidia = {
-      powerManagement.enable = true;
-
-      open = false;
-
-      nvidiaSettings = true;
-
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-
     networking.firewall.enable = true;
     programs.appimage.enable = true;
     programs.appimage.binfmt = true;
@@ -141,10 +130,6 @@
     services.xserver.videoDrivers = ["nvidia"];
     services.xserver.enable = true;
     boot.initrd.kernelModules = ["nvidia"];
-
-    services.supergfxd.enable = true;
-    systemd.services.supergfxd.path = [pkgs.pciutils];
-    services.asusd.enable = true;
 
     programs.obs-studio = {
       enable = true;

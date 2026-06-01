@@ -30,25 +30,28 @@
       loader.limine.enable = true;
       loader.limine.efiSupport = true;
       loader.efi.canTouchEfiVariables = true;
+      loader.timeout = 0;
 
       supportedFilesystems.ntfs = true;
+
+      consoleLogLevel = 0;
 
       kernelParams = [
         "quiet"
         "splash"
-        "loglevel=3"
         "rd.systemd.show_status=false"
         "rd.udev.log_level=3"
         "udev.log_priority=3"
         "amd_pstate=active"
-        "asus_wmi"
+        "vt.global_cursor_default=0"
       ];
-      kernelModules = ["rtw89_8852be" "k10temp" "cpuid" "v4l2loopback" "tcp_bbr"];
+      kernelModules = ["rtw89_8852be" "k10temp" "cpuid" "v4l2loopback" "tcp_bbr" "asus_wmi"];
 
       binfmt.emulatedSystems = ["aarch64-linux"];
     };
 
     boot.plymouth.enable = true;
+    boot.initrd.systemd.enable = true;
 
     services.displayManager.sddm = {
       enable = true;

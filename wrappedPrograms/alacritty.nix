@@ -6,21 +6,15 @@
   flake.wrappersModules.alacritty = {
     config,
     lib,
-    pkgs,
     ...
   }: {
     options.shell = lib.mkOption {
       type = lib.types.str;
       default = "";
     };
+
     config = {
-      #args = lib.mkAfter (lib.optionals (config.shell != "") [config.shell]);
       settings = {
-        general = {
-          import = [
-            "${inputs.alacritty-theme.packages.${pkgs.stdenv.hostPlatform.system}.gruvbox_dark}"
-          ];
-        };
         terminal = lib.mkIf (config.shell != "") {
           shell = {
             program = config.shell;
@@ -55,11 +49,23 @@
     };
   };
 
-  perSystem = {pkgs, ...}: {
+  perSystem = {
+    pkgs,
+    system,
+    ...
+  }: {
     packages.alacritty =
       (inputs.wrappers.wrapperModules.alacritty.apply {
         inherit pkgs;
-        imports = [self.wrappersModules.alacritty];
+        imports = [
+          self.wrappersModules.alacritty
+
+          {
+            config.settings.general.import = [
+              "${inputs.alacritty-theme.packages.${system}.gruvbox_dark}"
+            ];
+          }
+        ];
       }).wrapper;
   };
 }

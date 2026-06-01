@@ -13,12 +13,12 @@
       self.nixosModules.firefox
       self.nixosModules.chromium
       self.nixosModules.hyprland
-      self.nixosModules.rmpc
     ];
 
     environment.systemPackages = [
       selfpkgs.terminal
       selfpkgs.noctalia-shell
+      selfpkgs.yazi
 
       pkgs.mpv
       pkgs.qimgv
@@ -29,15 +29,26 @@
       pkgs.blueman
     ];
 
-    hjem.users.${config.preferences.user.name}.files = let
-      yazi-gruvbox = pkgs.fetchFromGitHub {
-        owner = "bennyyip";
-        repo = "gruvbox-dark.yazi";
-        rev = "91fdfa70f6d593934e62aba1e449f4ec3d3ccc90";
-        hash = "sha256-RWqyAdETD/EkDVGcnBPiMcw1mSd78Aayky9yoxSsry4=";
+    xdg.mime = {
+      enable = true;
+      defaultApplications = {
+        #"inode/directory" = "thunar.desktop";
+        "image/png" = "qimgv.desktop";
+        "image/jpeg" = "qimgv.desktop";
+        "application/pdf" = "firefox.desktop";
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "firefox.desktop";
+        "audio/x-vorbis+ogg" = "audacity.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/discord" = "vesktop.desktop";
+        "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
       };
-    in {
-      ".config/xdg-desktop-portal-termfilechooser/config".text = ''
+    };
+
+    services.blueman.enable = true;
+
+    environment.etc = {
+      "xdg/xdg-desktop-portal-termfilechooser/config".text = ''
         [filechooser]
         cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
         default_dir=$HOME/Downloads
@@ -47,30 +58,7 @@
         open_mode=suggested
         save_mode=last
       '';
-
-      # removed: inode/directory=thunar.desktop;
-      # add back later on here vvv
-      ".config/mimeapps.list".text = ''
-        [Default Applications]
-        image/png=qimgv.desktop;
-        image/jpeg=qimgv.desktop;
-        application/pdf=firefox.desktop;
-        application/vnd.openxmlformats-officedocument.wordprocessingml.document=firefox.desktop;
-        audio/x-vorbis+ogg=audacity.desktop;
-        x-scheme-handler/http=firefox.desktop;
-        x-scheme-handler/https=firefox.desktop;
-        x-scheme-handler/discord=vesktop.desktop;
-        x-scheme-handler/tg=org.telegram.desktop.desktop;
-      '';
-
-      ".config/yazi/flavors/gruvbox-dark.yazi".source = yazi-gruvbox;
-      ".config/yazi/theme.toml".text = ''
-        [flavor]
-        use = "gruvbox-dark"
-      '';
     };
-
-    services.blueman.enable = true;
 
     environment.sessionVariables = {
       QT_QPA_PLATFORMTHEME = "qt6ct";

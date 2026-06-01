@@ -50,13 +50,14 @@
           pkgs.ffmpeg-full
           pkgs.yt-dlp
           pkgs.lazygit
-          pkgs.yazi
           pkgs.starship
 
           # wrapper
           self'.packages.git
           self'.packages.nix-check-bin
           self'.packages.helix
+          self'.packages.yazi
+          self'.packages.rmpc
         ];
         env = {
           EDITOR = lib.getExe self'.packages.helix;

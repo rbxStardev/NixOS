@@ -10,15 +10,22 @@
       self.nixosModules.chromium
       self.nixosModules.hyprland
     ];
-    preferences.autostart = [selfpkgs.noctalia-shell];
 
     environment.systemPackages = [
       selfpkgs.terminal
       selfpkgs.noctalia-shell
+
+      pkgs.pavucontrol
+      pkgs.blueman
     ];
 
+    services.blueman.enable = true;
+
     environment.sessionVariables = {
+      QT_QPA_PLATFORMTHEME = "qt6ct";
+      QT_QPA_PLATFORM = "wayland;xcb";
       QT_IM_MODULE = "fcitx";
+      GDK_BACKEND = "wayland,x11";
       XMODIFIERS = "@im=fcitx";
     };
 

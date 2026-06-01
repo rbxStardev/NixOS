@@ -26,6 +26,8 @@
       url = "github:noctalia-dev/noctalia-plugins";
       flake = false;
     };
+
+    alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
   };
 
   outputs = inputs: let

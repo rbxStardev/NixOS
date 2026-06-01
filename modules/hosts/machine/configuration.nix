@@ -20,6 +20,8 @@
       self.nixosModules.desktop
 
       self.nixosModules.powersave
+
+      self.nixosModules.sddm-astronaut
     ];
 
     boot = {
@@ -50,6 +52,10 @@
 
     services.displayManager.sddm = {
       enable = true;
+      astronaut = {
+        enable = true;
+        theme = "japanese_aesthetic";
+      };
     };
 
     networking = {

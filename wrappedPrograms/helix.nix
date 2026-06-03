@@ -130,6 +130,17 @@
       (inputs.wrappers.wrapperModules.helix.apply {
         inherit pkgs;
         imports = [self.wrappersModules.helix];
+        runtimeInputs = with pkgs; [
+          tombi
+
+          lua-language-server
+          luau-lsp
+          stylua
+
+          marksman
+
+          vscode-json-languageserver
+        ];
       }).wrapper;
   };
 }

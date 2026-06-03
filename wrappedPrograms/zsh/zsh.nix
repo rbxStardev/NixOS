@@ -32,8 +32,6 @@
     };
 
     extraRC = builtins.readFile ./zsh-init.sh;
-
-    env.STARSHIP_CONFIG = toString ./starship.toml;
   };
 
   perSystem = {pkgs, ...}: {

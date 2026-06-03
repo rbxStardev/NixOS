@@ -1,33 +1,3866 @@
-{inputs, ...}: {
-  perSystem = {pkgs, ...}: let
-    yazi-gruvbox = pkgs.fetchFromGitHub {
-      owner = "bennyyip";
-      repo = "gruvbox-dark.yazi";
-      rev = "619fdc5844db0c04f6115a62cf218e707de2821e";
-      hash = "sha256-RWqyAdETD/EkDVGcnBPiMcw1mSd78Aayky9yoxSsry4=";
-    };
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.wrappersModules.yazi = {
+    theme = {
+      mgr = {
+        cwd = {fg = "#fbf1c7";};
+        find_keyword = {
+          fg = "#fb4934";
+          bold = true;
+          italic = true;
+          underline = true;
+        };
+        find_position = {
+          fg = "#fb4934";
+          bold = true;
+          italic = true;
+        };
+        marker_copied = {
+          fg = "#294d3f";
+          bg = "#294d3f";
+        };
+        marker_cut = {
+          fg = "#294d3f";
+          bg = "#294d3f";
+        };
+        marker_marked = {
+          fg = "#fb4934";
+          bg = "#fb4934";
+        };
+        marker_selected = {
+          fg = "#83a598";
+          bg = "#83a598";
+        };
+        count_copied = {
+          fg = "#e1eae6";
+          bg = "#294d3f";
+        };
+        count_cut = {
+          fg = "#e1eae6";
+          bg = "#294d3f";
+        };
+        count_selected = {
+          fg = "#282828";
+          bg = "#83a598";
+        };
+        border_style = {fg = "#b8bb26";};
+      };
 
-    yaziConfig = pkgs.symlinkJoin {
-      name = "yazi-config";
-      paths = [
-        (pkgs.writeTextDir "theme.toml" ''
-          [flavor]
-          dark = "gruvbox-dark"
-          light = "gruvbox-dark"
-        '')
-        (pkgs.runCommand "yazi-flavors" {} ''
-          mkdir -p $out/flavors
-          ln -s ${yazi-gruvbox} $out/flavors/gruvbox-dark.yazi
-        '')
-      ];
-    };
-  in {
-    packages.yazi = inputs.wrappers.lib.wrapPackage {
-      inherit pkgs;
-      package = pkgs.yazi;
-      env = {
-        YAZI_CONFIG_HOME = "${yaziConfig}";
+      status = {
+        overall = {fg = "#b8bb26";};
+        sep_left = {
+          open = "";
+          close = "";
+        };
+        sep_right = {
+          open = "";
+          close = "";
+        };
+        progress_label = {bold = true;};
+        progress_normal = {
+          fg = "#b8bb26";
+          bg = "#282828";
+        };
+        progress_error = {
+          fg = "#fb4934";
+          bg = "#282828";
+        };
+        perm_type = {fg = "#fabd2f";};
+        perm_write = {fg = "#83a598";};
+        perm_exec = {fg = "#fb4934";};
+        perm_read = {fg = "#294d3f";};
+        perm_sep = {fg = "#444507";};
+      };
+
+      mode = {
+        normal_main = {
+          bg = "#b8bb26";
+          fg = "#282828";
+          bold = true;
+        };
+        normal_alt = {
+          bg = "#3c3836";
+          fg = "#ebdbb2";
+        };
+        select_main = {
+          bg = "#fabd2f";
+          fg = "#282828";
+          bold = true;
+        };
+        select_alt = {
+          bg = "#3c3836";
+          fg = "#ebdbb2";
+        };
+        unset_main = {
+          bg = "#83a598";
+          fg = "#282828";
+          bold = true;
+        };
+        unset_alt = {
+          bg = "#3c3836";
+          fg = "#ebdbb2";
+        };
+      };
+
+      input = {
+        border = {fg = "#b8bb26";};
+        title = {};
+        value = {fg = "#fbf1c7";};
+        selected = {reversed = true;};
+      };
+
+      tabs = {
+        active = {
+          fg = "#282828";
+          bold = true;
+          bg = "#b8bb26";
+        };
+        inactive = {
+          fg = "#fabd2f";
+          bg = "#282828";
+        };
+        sep_inner = {
+          open = "";
+          close = "";
+        };
+      };
+
+      cmp = {
+        border = {
+          fg = "#b8bb26";
+          bg = "#282828";
+        };
+      };
+
+      tasks = {
+        border = {fg = "#b8bb26";};
+        title = {};
+        hovered = {
+          fg = "#294d3f";
+          underline = true;
+        };
+      };
+
+      which = {
+        cols = 3;
+        mask = {bg = "#282828";};
+        cand = {fg = "#b8bb26";};
+        rest = {fg = "#282828";};
+        desc = {fg = "#fbf1c7";};
+        separator = " ▶ ";
+        separator_style = {fg = "#fbf1c7";};
+      };
+
+      spot = {
+        border = {fg = "#b8bb26";};
+        title = {fg = "#b8bb26";};
+        tbl_col = {fg = "#fbf1c7";};
+        tbl_cell = {
+          fg = "#fbf1c7";
+          bg = "#282828";
+        };
+      };
+
+      help = {
+        on = {fg = "#fbf1c7";};
+        run = {fg = "#fbf1c7";};
+        hovered = {
+          reversed = true;
+          bold = true;
+        };
+        footer = {
+          fg = "#282828";
+          bg = "#fabd2f";
+        };
+      };
+
+      notify = {
+        title_info = {fg = "#83a598";};
+        title_warn = {fg = "#b8bb26";};
+        title_error = {fg = "#fb4934";};
+      };
+
+      filetype = {
+        rules = [
+          {
+            mime = "image/*";
+            fg = "#94e2d5";
+          }
+          {
+            mime = "{audio,video}/*";
+            fg = "#f9e2af";
+          }
+          {
+            mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}";
+            fg = "#f5c2e7";
+          }
+          {
+            mime = "application/{pdf,doc,rtf}";
+            fg = "#a6e3a1";
+          }
+          {
+            mime = "*";
+            is = "orphan";
+            fg = "#fed2cd";
+            bg = "#7d0d00";
+          }
+          {
+            mime = "application/*exec*";
+            fg = "#fb4934";
+          }
+          {
+            url = "*";
+            fg = "#fbf1c7";
+          }
+          {
+            url = "*/";
+            fg = "#b8bb26";
+          }
+        ];
+      };
+
+      icon = {
+        globs = [];
+        dirs = [
+          {
+            name = ".config";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".git";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".github";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".npm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Desktop";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Development";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Documents";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Downloads";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Library";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Movies";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Music";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Pictures";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Public";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Videos";
+            text = "";
+            fg = "#b8bb26";
+          }
+        ];
+        files = [
+          {
+            name = ".babelrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".bash_profile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".bashrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".clang-format";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".clang-tidy";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".codespellrc";
+            text = "󰓆";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".condarc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".dockerignore";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".ds_store";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".editorconfig";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".env";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".eslintignore";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".eslintrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".git-blame-ignore-revs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gitattributes";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gitconfig";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gitignore";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gitlab-ci.yml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gitmodules";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gtkrc-2.0";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".gvimrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".justfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".luacheckrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".luaurc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".mailmap";
+            text = "󰊢";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".nanorc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".npmignore";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".npmrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".nuxtrc";
+            text = "󱄆";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".nvmrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".pnpmfile.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".pre-commit-config.yaml";
+            text = "󰛢";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierignore";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.json5";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.toml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.yaml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".prettierrc.yml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".pylintrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".settings.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".SRCINFO";
+            text = "󰣇";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".vimrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".Xauthority";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".xinitrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".Xresources";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".xsession";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".zprofile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".zshenv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = ".zshrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "_gvimrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "_vimrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "AUTHORS";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "AUTHORS.txt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "brewfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bspwmrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "build";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "build.gradle";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "build.zig.zon";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bun.lock";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bun.lockb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cantorrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "checkhealth";
+            text = "󰓙";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cmakelists.txt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "code_of_conduct";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "code_of_conduct.md";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "commit_editmsg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "commitlint.config.js";
+            text = "󰜘";
+            fg = "#b8bb26";
+          }
+          {
+            name = "commitlint.config.ts";
+            text = "󰜘";
+            fg = "#b8bb26";
+          }
+          {
+            name = "compose.yaml";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "compose.yml";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "config";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "containerfile";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "copying";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "copying.lesser";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Directory.Build.props";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Directory.Build.targets";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Directory.Packages.props";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "docker-compose.yaml";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "docker-compose.yml";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dockerfile";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eslint.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eslint.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eslint.config.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eslint.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ext_typoscript_setup.txt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "favicon.ico";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fp-info-cache";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fp-lib-table";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "FreeCAD.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Gemfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gnumakefile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "go.mod";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "go.sum";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "go.work";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gradle-wrapper.properties";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gradle.properties";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gradlew";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "groovy";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gruntfile.babel.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gruntfile.coffee";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gruntfile.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gruntfile.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gtkrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gulpfile.babel.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gulpfile.coffee";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gulpfile.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gulpfile.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hypridle.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hyprland.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hyprlandd.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hyprlock.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hyprpaper.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hyprsunset.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "i18n.config.js";
+            text = "󰗊";
+            fg = "#b8bb26";
+          }
+          {
+            name = "i18n.config.ts";
+            text = "󰗊";
+            fg = "#b8bb26";
+          }
+          {
+            name = "i3blocks.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "i3status.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "index.theme";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ionic.config.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Jenkinsfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "justfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kalgebrarc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdeglobals";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdenlive-layoutsrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdenliverc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kritadisplayrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kritarc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "license";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "license.md";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lxde-rc.xml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lxqt.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "makefile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mix.lock";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mpv.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "next.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "next.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "next.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "node_modules";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nuxt.config.cjs";
+            text = "󱄆";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nuxt.config.js";
+            text = "󱄆";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nuxt.config.mjs";
+            text = "󱄆";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nuxt.config.ts";
+            text = "󱄆";
+            fg = "#b8bb26";
+          }
+          {
+            name = "package-lock.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "package.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "PKGBUILD";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "platformio.ini";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.cts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.mts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "playwright.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pnpm-lock.yaml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pnpm-workspace.yaml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pom.xml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prettier.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prettier.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prettier.config.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prettier.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prisma.config.mts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prisma.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "procfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "PrusaSlicer.ini";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "PrusaSlicerGcodeViewer.ini";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "py.typed";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "QtProject.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rakefile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "readme";
+            text = "󰂺";
+            fg = "#b8bb26";
+          }
+          {
+            name = "readme.md";
+            text = "󰂺";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rmd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "robots.txt";
+            text = "󰚩";
+            fg = "#b8bb26";
+          }
+          {
+            name = "security";
+            text = "󰒃";
+            fg = "#b8bb26";
+          }
+          {
+            name = "security.md";
+            text = "󰒃";
+            fg = "#b8bb26";
+          }
+          {
+            name = "settings.gradle";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "svelte.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sxhkdrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sym-lib-table";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tailwind.config.js";
+            text = "󱏿";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tailwind.config.mjs";
+            text = "󱏿";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tailwind.config.ts";
+            text = "󱏿";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tmux.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tmux.conf.local";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tsconfig.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "unlicense";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vagrantfile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vercel.json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.cts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.mts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vite.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.cts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.mts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vitest.config.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vlcrc";
+            text = "󰕼";
+            fg = "#b8bb26";
+          }
+          {
+            name = "webpack";
+            text = "󰜫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "weston.ini";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "workspace";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wrangler.jsonc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wrangler.toml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xdph.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xmobarrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xmobarrc.hs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xmonad.hs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xorg.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xsettingsd.conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+        ];
+        exts = [
+          {
+            name = "3gp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "3mf";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "7z";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "a";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "aac";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ada";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "adb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ads";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ai";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "aif";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "aiff";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "android";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ape";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "apk";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "apl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "app";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "applescript";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "asc";
+            text = "󰦝";
+            fg = "#b8bb26";
+          }
+          {
+            name = "asm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ass";
+            text = "󰨖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "astro";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "avif";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "awk";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "azcli";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bak";
+            text = "󰁯";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bash";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bat";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bazel";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bib";
+            text = "󱉟";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bicep";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bicepparam";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bin";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "blade.php";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "blend";
+            text = "󰂫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "blp";
+            text = "󰺾";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bmp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bqn";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "brep";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bz2";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bz3";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "bzl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "c";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "c++";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cache";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cast";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cbl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ccm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cfc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cfg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cfm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "clj";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cljc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cljd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cljs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cmake";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cob";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cobol";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "coffee";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "conda";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "conf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "config.ru";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cow";
+            text = "󰆚";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cpp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cppm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cpy";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cr";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "crdownload";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cs";
+            text = "󰌛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "csh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cshtml";
+            text = "󱦗";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cson";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "csproj";
+            text = "󰪮";
+            fg = "#b8bb26";
+          }
+          {
+            name = "css";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "csv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cu";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cue";
+            text = "󰲹";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cuh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cxx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "cxxm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "d";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "d.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dart";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "db";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dconf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "desktop";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "diff";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dll";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "doc";
+            text = "󰈬";
+            fg = "#b8bb26";
+          }
+          {
+            name = "Dockerfile";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dockerignore";
+            text = "󰡨";
+            fg = "#b8bb26";
+          }
+          {
+            name = "docx";
+            text = "󰈬";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dot";
+            text = "󱁉";
+            fg = "#b8bb26";
+          }
+          {
+            name = "download";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "drl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dropbox";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dump";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dwg";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "dxf";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ebook";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ebuild";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "edn";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ejs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "el";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "elc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "elf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "elm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eln";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "env";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "eot";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "epp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "epub";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "erb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "erl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "exe";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "exs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "f#";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "f3d";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "f90";
+            text = "󱈚";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fbx";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcbak";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcmacro";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcmat";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcparam";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcscript";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcstd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fcstd1";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fctb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fctl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fdmdownload";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "feature";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fish";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "flac";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "flc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "flf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fnl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fodg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fodp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fods";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fodt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "frag";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fsi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fsscript";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "fsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gcode";
+            text = "󰐫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gemspec";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "geom";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gif";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "git";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "glb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gleam";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "glsl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gnumakefile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "go";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "godot";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gpr";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gql";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gradle";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "graphql";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gresource";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gv";
+            text = "󱁉";
+            fg = "#b8bb26";
+          }
+          {
+            name = "gz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "h";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "haml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hbs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "heex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hpp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hrl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "htm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "html";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "http";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "huff";
+            text = "󰡘";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hurl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "hxx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ical";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "icalendar";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ico";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ics";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ifb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ifc";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ige";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "iges";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "igs";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "image";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "img";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "import";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "info";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ini";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ino";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ipynb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "iso";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ixx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jar";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "java";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jpeg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jpg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "json";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "json5";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jsonc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jwmrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "jxl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kbx";
+            text = "󰯄";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdbx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdenlive";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kdenlivetitle";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_dru";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_mod";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_pcb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_prl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_pro";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_sch";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_sym";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kicad_wks";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ko";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kpp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kra";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "krz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ksh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "kts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lck";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "leex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "less";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lff";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lhs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lib";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "license";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "liquid";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lock";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "log";
+            text = "󰌱";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lrc";
+            text = "󰨖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "lua";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "luac";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "luau";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "m";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "m3u";
+            text = "󰲹";
+            fg = "#b8bb26";
+          }
+          {
+            name = "m3u8";
+            text = "󰲹";
+            fg = "#b8bb26";
+          }
+          {
+            name = "m4a";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "m4v";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "magnet";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "makefile";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "markdown";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "material";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "md";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "md5";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mdx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mint";
+            text = "󰌪";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mk";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mkv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mli";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mobi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mojo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mov";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mp3";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mp4";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mpp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "msf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "mustache";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nfo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nim";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nix";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "norg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nswag";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "nu";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "o";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "obj";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "odf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "odg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "odin";
+            text = "󰟢";
+            fg = "#b8bb26";
+          }
+          {
+            name = "odp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ods";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "odt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "oga";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ogg";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ogv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ogx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "opus";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "org";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "otf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "out";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "part";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "patch";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pck";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pcm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pdf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "php";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pls";
+            text = "󰲹";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ply";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "png";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "po";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pot";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ppt";
+            text = "󰈧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pptx";
+            text = "󰈧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "prisma";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pro";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ps1";
+            text = "󰨊";
+            fg = "#b8bb26";
+          }
+          {
+            name = "psb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "psd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "psd1";
+            text = "󰨊";
+            fg = "#b8bb26";
+          }
+          {
+            name = "psm1";
+            text = "󰨊";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pub";
+            text = "󰷖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pxd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pxi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "py";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyw";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "pyx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "qm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "qml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "qrc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "qss";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "query";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "R";
+            text = "󰟔";
+            fg = "#b8bb26";
+          }
+          {
+            name = "r";
+            text = "󰟔";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rake";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rar";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rasi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "razor";
+            text = "󱦘";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rb";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "res";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "resi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rlib";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rmd";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rproj";
+            text = "󰗆";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "rss";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "s";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sass";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sbt";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "scad";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "scala";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "scm";
+            text = "󰘧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "scss";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sha1";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sha224";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sha256";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sha384";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sha512";
+            text = "󰕥";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sig";
+            text = "󰘧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "signature";
+            text = "󰘧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "skp";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sldasm";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sldprt";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "slim";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sln";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "slnx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "slvs";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sml";
+            text = "󰘧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "so";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sol";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "spec.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "spec.jsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "spec.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "spec.tsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "spx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sql";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sqlite";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sqlite3";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "srt";
+            text = "󰨖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ssa";
+            text = "󰨖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ste";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "step";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stl";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.jsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.mjs";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.svelte";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.tsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stories.vue";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "stp";
+            text = "󰻫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "strings";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "styl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sub";
+            text = "󰨖";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sublime";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "suo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "sv";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "svelte";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "svg";
+            text = "󰜡";
+            fg = "#b8bb26";
+          }
+          {
+            name = "svgz";
+            text = "󰜡";
+            fg = "#b8bb26";
+          }
+          {
+            name = "svh";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "swift";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "t";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tbc";
+            text = "󰛓";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tcl";
+            text = "󰛓";
+            fg = "#b8bb26";
+          }
+          {
+            name = "templ";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "terminal";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "test.js";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "test.jsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "test.ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "test.tsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tex";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tfvars";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tgz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tmpl";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tmux";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "toml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "torrent";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tres";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ts";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tscn";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tsconfig";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "tsx";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ttf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "twig";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "txt";
+            text = "󰈙";
+            fg = "#b8bb26";
+          }
+          {
+            name = "txz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "typ";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "typoscript";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "ui";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "v";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vala";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vert";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vh";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vhd";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vhdl";
+            text = "󰍛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vim";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vsh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vsix";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "vue";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wasm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wav";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "webm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "webmanifest";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "webp";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "webpack";
+            text = "󰜫";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wma";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wmv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "woff";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "woff2";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wrl";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wrz";
+            text = "󰆧";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wv";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "wvc";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "x";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xaml";
+            text = "󰙳";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xcf";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xcplayground";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xcstrings";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xls";
+            text = "󰈛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xlsx";
+            text = "󰈛";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xm";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xml";
+            text = "󰗀";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xpi";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xslt";
+            text = "󰗀";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xul";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "xz";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "yaml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "yml";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "zig";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "zip";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "zsh";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "zst";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            name = "🔥";
+            text = "";
+            fg = "#b8bb26";
+          }
+        ];
+        conds = [
+          {
+            "if" = "orphan";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "link";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "block";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "char";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "fifo";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "sock";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "sticky";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "dummy";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "dir";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "exec";
+            text = "";
+            fg = "#b8bb26";
+          }
+          {
+            "if" = "!dir";
+            text = "";
+            fg = "#b8bb26";
+          }
+        ];
       };
     };
+  };
+
+  perSystem = {pkgs, ...}: {
+    packages.yazi =
+      (inputs.wrappers.wrapperModules.yazi.apply {
+        inherit pkgs;
+        imports = [self.wrappersModules.yazi];
+      }).wrapper;
   };
 }

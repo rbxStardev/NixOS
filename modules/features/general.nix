@@ -41,7 +41,6 @@
       pkgs.ffmpeg-full
       pkgs.yt-dlp
       pkgs.lazygit
-      pkgs.starship
 
       # wrapper
       selfpkgs.git
@@ -49,6 +48,7 @@
       selfpkgs.helix
       selfpkgs.yazi
       selfpkgs.rmpc
+      selfpkgs.starship
     ];
 
     users.users.${config.preferences.user.name} = {

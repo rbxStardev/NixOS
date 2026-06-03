@@ -20,6 +20,17 @@
       (inputs.wrappers.lib.wrapPackage {
         inherit pkgs;
         package = self'.packages.zsh;
+        runtimeInputs = with pkgs; [
+          tombi
+
+          lua-language-server
+          luau-lsp
+          stylua
+
+          marksman
+
+          vscode-json-languageserver
+        ];
         env = {
           EDITOR = lib.getExe self'.packages.helix;
         };

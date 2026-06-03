@@ -12,7 +12,8 @@
       paths = [
         (pkgs.writeTextDir "theme.toml" ''
           [flavor]
-          use = "gruvbox-dark"
+          dark = "gruvbox-dark"
+          light = "gruvbox-dark"
         '')
         (pkgs.runCommand "yazi-flavors" {} ''
           mkdir -p $out/flavors

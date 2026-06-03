@@ -112,6 +112,13 @@
         selected = {reversed = true;};
       };
 
+      indicator = {
+        padding = {
+          open = "";
+          close = "";
+        };
+      };
+
       tabs = {
         active = {
           fg = "#282828";
@@ -123,8 +130,12 @@
           bg = "#282828";
         };
         sep_inner = {
-          open = "";
-          close = "";
+          open = "";
+          close = "";
+        };
+        sep_outer = {
+          open = "";
+          close = "";
         };
       };
 

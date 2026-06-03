@@ -20,7 +20,6 @@
       pkgs.alejandra
       pkgs.manix
       pkgs.nix-inspect
-      selfpkgs.nh
 
       # other
       pkgs.file

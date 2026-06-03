@@ -1,5 +1,9 @@
 {inputs, ...}: {
-  flake.nixosModules.nix = {pkgs, ...}: {
+  flake.nixosModules.nix = {
+    pkgs,
+    config,
+    ...
+  }: {
     imports = [
       inputs.nix-index-database.nixosModules.nix-index
     ];
@@ -12,6 +16,15 @@
       direnvrcExtra = "";
       nix-direnv = {
         enable = true;
+      };
+    };
+
+    programs.nh = {
+      enable = true;
+      flake = "/home/${config.preferences.user.name}/NixOS";
+      clean = {
+        enable = true;
+        extraArgs = "--keep-since 7d --keep 3";
       };
     };
 

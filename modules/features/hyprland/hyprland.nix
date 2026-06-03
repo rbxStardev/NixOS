@@ -23,7 +23,7 @@
           (builtins.attrNames (builtins.readDir ./settings));
         requires = map (f: ''require("settings.${builtins.replaceStrings [".lua"] [""] f}")'') luaFiles;
       in
-        ''require("theme")'' + "\n" + builtins.concatStringsSep "\n" requires;
+        builtins.concatStringsSep "\n" requires;
     };
   };
 }

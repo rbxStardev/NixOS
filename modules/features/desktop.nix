@@ -1,7 +1,7 @@
 {self, ...}: {
   flake.nixosModules.desktop = {
     pkgs,
-    config,
+    lib,
     ...
   }: let
     selfpkgs = self.packages."${pkgs.stdenv.hostPlatform.system}";
@@ -56,8 +56,8 @@
         cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
         default_dir=$HOME/Downloads
         create_help_file=1
-        env=TERMCMD='alacritty --title filechooser -e'
-        env=PATH="$PATH:/run/current-system/sw/bin"
+        env=TERMCMD='${lib.getExe selfpkgs.terminal} --title filechooser -e'
+        env=PATH="$PATH:${lib.makeBinPath [selfpkgs.yazi pkgs.file]}"
         open_mode=suggested
         save_mode=last
       '';
@@ -68,6 +68,7 @@
       QT_QPA_PLATFORM = "wayland;xcb";
       QT_IM_MODULE = "fcitx";
       GDK_BACKEND = "wayland,x11";
+      GTK_USE_PORTAL = "1";
       XMODIFIERS = "@im=fcitx";
     };
 

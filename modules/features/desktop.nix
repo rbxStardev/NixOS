@@ -31,6 +31,8 @@
 
       pkgs.pavucontrol
       pkgs.blueman
+
+      pkgs.mpd-discord-rpc
     ];
 
     xdg.mime = {

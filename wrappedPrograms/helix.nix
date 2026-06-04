@@ -3,7 +3,7 @@
   inputs,
   ...
 }: {
-  flake.wrappersModules.helix = {...}: {
+  flake.wrappersModules.helix = {
     settings = {
       theme = "gruvbox_dark_hard";
       editor = {

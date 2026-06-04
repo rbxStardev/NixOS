@@ -49,7 +49,7 @@
 
     configuredThemePkg = pkgs.stdenv.mkDerivation {
       pname = "sddm-astronaut-theme-configured";
-      version = baseThemePkg.version;
+      inherit (baseThemePkg) version;
       src = baseThemePkg;
       dontUnpack = true;
 

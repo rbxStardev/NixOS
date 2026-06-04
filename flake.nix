@@ -33,6 +33,8 @@
     };
 
     alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
+
+    xdp-termfilepickers.url = "github:Guekka/xdg-desktop-portal-termfilepickers";
   };
 
   outputs = inputs: let

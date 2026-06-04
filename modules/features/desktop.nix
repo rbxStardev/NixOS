@@ -53,19 +53,6 @@
 
     services.blueman.enable = true;
 
-    environment.etc = {
-      "xdg/xdg-desktop-portal-termfilechooser/config".text = ''
-        [filechooser]
-        cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
-        default_dir=$HOME/Downloads
-        create_help_file=1
-        env=TERMCMD='${lib.getExe selfpkgs.terminal} --title filechooser -e'
-        env=PATH="$PATH:${lib.makeBinPath [selfpkgs.yazi pkgs.file]}"
-        open_mode=suggested
-        save_mode=last
-      '';
-    };
-
     environment.sessionVariables = {
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_QPA_PLATFORM = "wayland;xcb";

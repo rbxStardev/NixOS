@@ -13,7 +13,7 @@
         position = "center";
         pinnedApps = [];
         sortByMostUsed = true;
-        terminalCommand = "alacritty -e";
+        terminalCommand = "foot -e";
         customLaunchPrefixEnabled = false;
         customLaunchPrefix = "";
         viewMode = "list";

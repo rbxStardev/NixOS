@@ -12,8 +12,8 @@ hl.bind("SUPER + Period", hl.dsp.exec_cmd(vars.quickshellIpc .. " launcher emoji
 -- Variable defined apps
 hl.bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))
 hl.bind(vars.kbBrowser, hl.dsp.exec_cmd(vars.browser))
-hl.bind(vars.kbEditor, hl.dsp.exec_cmd(vars.editor))
-hl.bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.fileExplorer))
+hl.bind(vars.kbEditor, hl.dsp.exec_cmd(vars.terminal .. " -e " .. vars.editor))
+hl.bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.terminal .. " -e " .. vars.fileExplorer))
 
 -- Window and group management
 hl.bind(vars.kbCloseWindow, hl.dsp.window.close())

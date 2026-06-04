@@ -6,7 +6,7 @@
     theme: "gruvbox",
     
     album_art: (
-        method: Kitty,
+        method: Sixel,
         max_size_px: (width: 0, height: 0),
         vertical_align: Top,
         horizontal_align: Center,

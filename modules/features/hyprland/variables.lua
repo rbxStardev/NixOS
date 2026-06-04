@@ -1,10 +1,10 @@
 local variables = {
 	-- ### Hyprland ###
 	-- Apps
-	terminal = "alacritty",
+	terminal = "foot",
 	browser = "firefox",
 	editor = "hx",
-	fileExplorer = "y",
+	fileExplorer = "yazi",
 	-- QuickshellConfig
 	quickshellIpc = "noctalia-shell ipc call",
 	-- Touchpad

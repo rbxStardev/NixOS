@@ -70,10 +70,19 @@ hl.window_rule({
 	float = true,
 })
 
--- Ghostty / NMTUI
 hl.window_rule({
-	name = "nmtui-alacritty",
-	match = { class = "alacritty", title = "nmtui" },
+	name = "ueberzugpp",
+	match = { class = "^(ueberzugpp.*)$" },
+	float = true,
+	no_anim = true,
+	no_focus = true,
+	no_initial_focus = true,
+})
+
+-- foot / NMTUI
+hl.window_rule({
+	name = "nmtui-foot",
+	match = { class = "foot", title = "nmtui" },
 	float = true,
 	size = "60% 70%",
 	center = 1,

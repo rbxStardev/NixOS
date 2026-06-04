@@ -21,6 +21,7 @@
 
     environment.systemPackages = [
       selfpkgs.terminal
+      pkgs.chafa
       selfpkgs.noctalia-shell
 
       pkgs.mpv

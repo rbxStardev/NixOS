@@ -7,7 +7,7 @@
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
 
-      palette = "noctalia";
+      palette = "gruvbox";
 
       format = "[░▒▓](p_main)[  ](bg:p_main fg:on_p_main)[](fg:p_main bg:dir_bg)$directory[](fg:dir_bg bg:git_bg)$git_branch$git_status[](fg:git_bg bg:lang_bg)$nix_shell$nodejs$rust$golang$php[](fg:lang_bg bg:time_bg)$time[ ](fg:time_bg)\n$character";
 
@@ -26,6 +26,7 @@
           Downloads = " ";
           Music = " ";
           Pictures = " ";
+          Videos = " ";
         };
       };
 
@@ -48,6 +49,24 @@
         symbol = "";
       };
 
+      rust = {
+        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
+        style = "bg:lang_bg";
+        symbol = "";
+      };
+
+      dotnet = {
+        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
+        style = "bg:lang_bg";
+        symbol = "";
+      };
+
+      lua = {
+        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
+        style = "bg:lang_bg";
+        symbol = "󰢱";
+      };
+
       time = {
         disabled = false;
         format = "[[  $time ](fg:on_time bg:time_bg)]($style)";
@@ -56,7 +75,7 @@
       };
 
       palettes = {
-        noctalia = {
+        gruvbox = {
           p_main = "green";
           on_p_main = "black";
           dir_bg = "yellow";

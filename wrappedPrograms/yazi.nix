@@ -56,7 +56,7 @@
           close = "";
         };
         sep_right = {
-          open = "";
+          open = "";
           close = "";
         };
         progress_label = {bold = true;};

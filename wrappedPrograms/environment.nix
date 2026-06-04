@@ -10,9 +10,9 @@
     ...
   }: {
     packages.terminal =
-      (inputs.wrappers.wrapperModules.alacritty.apply {
+      (inputs.wrappers.wrapperModules.foot.apply {
         inherit pkgs;
-        imports = [self.wrappersModules.alacritty];
+        imports = [self.wrappersModules.foot];
         shell = lib.getExe' self'.packages.environment "zsh";
       }).wrapper;
 

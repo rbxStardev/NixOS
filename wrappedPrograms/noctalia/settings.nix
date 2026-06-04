@@ -328,14 +328,14 @@
         smoothScrollEnabled = true;
       };
       hooks = {
-        enabled = false;
+        enabled = true;
         wallpaperChange = "";
         darkModeChange = "";
         screenLock = "";
         screenUnlock = "";
         performanceModeEnabled = "";
         performanceModeDisabled = "";
-        startup = "";
+        startup = "aplay -c 2 -D hw:1,0 /home/star/Assets/sounds/curse.wav &";
         session = "";
         colorGeneration = "";
       };

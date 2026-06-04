@@ -23,6 +23,7 @@
       selfpkgs.terminal
       pkgs.chafa
       selfpkgs.noctalia-shell
+      pkgs.alsa-utils
 
       pkgs.mpv
       pkgs.qimgv

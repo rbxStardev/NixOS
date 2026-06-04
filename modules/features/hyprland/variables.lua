@@ -37,6 +37,7 @@ local variables = {
 	windowRoundingPower = 0,
 	windowBorderSize = 1,
 	-- Misc
+	curse = true,
 	volumeStep = 10, -- In percent
 	cursorTheme = "phinger-cursors-gruvbox-material",
 	cursorSize = 24,

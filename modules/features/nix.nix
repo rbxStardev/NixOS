@@ -11,7 +11,7 @@
 
     programs.direnv = {
       enable = true;
-      silent = false;
+      silent = true;
       loadInNixShell = true;
       direnvrcExtra = "";
       nix-direnv = {

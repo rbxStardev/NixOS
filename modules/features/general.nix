@@ -49,6 +49,7 @@
       selfpkgs.starship
       selfpkgs.bat
       selfpkgs.fastfetch
+      selfpkgs.tmux
     ];
 
     environment.shells = [selfpkgs.environment];

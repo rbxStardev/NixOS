@@ -51,10 +51,12 @@
       selfpkgs.fastfetch
     ];
 
+    environment.shells = [selfpkgs.environment];
     users.users.${config.preferences.user.name} = {
       isNormalUser = true;
       description = "${config.preferences.user.name}'s account";
       extraGroups = ["networkmanager" "wheel" "audio" "video"];
+      shell = selfpkgs.environment;
 
       initialPassword = "12345";
     };

@@ -3,7 +3,7 @@
   inputs,
   ...
 }: {
-  flake.wrappersModules.helix = {
+  flake.wrappersModules.helix = {config, ...}: {
     settings = {
       theme = "gruvbox_dark_hard";
       editor = {
@@ -59,7 +59,7 @@
         {
           name = "nix";
           auto-format = true;
-          language-servers = ["nil" "nixd"];
+          language-servers = ["nixd"];
           formatter = {
             command = "alejandra";
             args = ["--quiet" "--"];
@@ -97,7 +97,7 @@
         nixd = {
           command = "nixd";
           config.nixd = {
-            nixpkgs.expr = "import <nixpkgs> {}";
+            nixpkgs.expr = ''import (builtins.getFlake "/home/star/NixOS").inputs.nixpkgs { }'';
             options = {
               nixos.expr = ''(builtins.getFlake "/home/star/NixOS").nixosConfigurations.machine.options'';
               flake-parts.expr = ''(builtins.getFlake "/home/star/NixOS").debug.options'';

@@ -3,17 +3,42 @@
   inputs,
   ...
 }: {
-  flake.wrappersModules.fastfetch = {
+  flake.wrappersModules.fastfetch = {pkgs, ...}: let
+    theme = self.theme;
+
+    customLogo = pkgs.writeText "fastfetch-logo.txt" ''
+           $1_   $4___    _
+          $1+o\  $4\  \  / \
+          $1\oo\  $4\  \/  /
+        $1,oo+oo+oo$4\   ,/ $2+\
+       $1<oooooooooo$4\  \ $2/os;
+           $4/``/    \  $2,oo/
+      $4,─~─'  /      \$2,oooooo,
+      $4\__   $3;s      $2/oo/sss>`
+        $4/  /$3so\$4____$2/ss/$4____
+       $4`, / $3\oo\   $4```     /
+        $4\/ $3/sooo\$4─~.  .─~─`
+          $3/so/\oo\  $4\  \
+          $3\o/  \s+\  $4\_/
+                $3```
+    '';
+  in {
     settings = {
       "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
 
       logo = {
-        type = "builtin";
-        height = 15;
-        width = 30;
+        type = "file";
+        source = "${customLogo}";
+        color = {
+          "1" = theme.base0B; #green
+          "2" = theme.base0A; #yellow
+          "3" = theme.base09; #orange
+          "4" = theme.base05; #normal
+        };
         padding = {
-          top = 5;
+          top = 8;
           left = 3;
+          right = 4;
         };
       };
 

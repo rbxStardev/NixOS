@@ -35,6 +35,35 @@
     languages = {
       language = [
         {
+          name = "rust";
+          auto-format = true;
+          language-servers = ["rust-analyzer"];
+          formatter = {
+            command = "rustfmt";
+          };
+          debugger = {
+            name = "lldb-dap";
+            transport = "stdio";
+            command = "lldb-dap";
+            templates = [
+              {
+                name = "binary";
+                request = "launch";
+                completion = [
+                  {
+                    name = "binary";
+                    completion = "filename";
+                  }
+                ];
+                args = {
+                  program = "{0}";
+                  runInTerminal = true;
+                };
+              }
+            ];
+          };
+        }
+        {
           name = "lua";
           auto-format = true;
           injection-regex = "lua";
@@ -94,6 +123,22 @@
         }
       ];
       language-server = {
+        rust-analyzer = {
+          command = "rust-analyzer";
+          config = {
+            check = {
+              command = "clippy";
+            };
+            inlayHints = {
+              bindingModeHints.enable = true;
+              closingBraceHints.minLines = 10;
+              closureReturnTypeHints.enable = "with_block";
+              discriminantHints.enable = "fieldless";
+              lifetimeElisionHints.enable = "skip_trivial";
+              typeHints.hideNamedConstructor = true;
+            };
+          };
+        };
         nixd = {
           command = "nixd";
           config.nixd = {

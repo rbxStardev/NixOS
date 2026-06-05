@@ -32,10 +32,8 @@
       pkgs.htop
       pkgs.btop
       pkgs.eza
-      pkgs.bat
       pkgs.fd
       pkgs.ripgrep
-      pkgs.fastfetch
       pkgs.tree-sitter
       pkgs.imagemagick
       pkgs.ffmpeg-full
@@ -49,6 +47,8 @@
       selfpkgs.yazi
       selfpkgs.rmpc
       selfpkgs.starship
+      selfpkgs.bat
+      selfpkgs.fastfetch
     ];
 
     users.users.${config.preferences.user.name} = {

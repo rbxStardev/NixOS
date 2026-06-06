@@ -1,6 +1,10 @@
 {
-  flake.nixosModules.gaming = {
+  flake.nixosModules.gaming = {pkgs, ...}: {
     hardware.graphics.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      hydralauncher
+    ];
 
     programs = {
       gamemode.enable = true;

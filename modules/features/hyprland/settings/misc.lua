@@ -1,5 +1,4 @@
 hl.config({
-	-- Configurações Diversas (Misc)
 	misc = {
 		allow_session_lock_restore = true,
 		animate_manual_resizes = false,
@@ -14,7 +13,6 @@ hl.config({
 		vrr = 0,
 	},
 
-	-- Configurações de Depuração (Debug)
 	debug = {
 		error_position = 1,
 	},

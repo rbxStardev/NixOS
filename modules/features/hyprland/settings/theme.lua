@@ -1,9 +1,10 @@
+--- @module theme
+--- @desc Maps color palette hex/rgb values to Hyprland's internal UI elements.
+
 local primary = "rgb(b8bb26)"
 local surface = "rgb(282828)"
 local secondary = "rgb(fabd2f)"
 local error = "rgb(fb4934)"
-local tertiary = "rgb(83a598)"
-local surface_lowest = "rgb(2c2b2a)"
 
 hl.config({
 	general = {

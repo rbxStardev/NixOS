@@ -17,13 +17,26 @@
       ".config/hypr/hyprland.lua".source = ./hyprland.lua;
       ".config/hypr/variables.lua".source = ./variables.lua;
       ".config/hypr/settings".source = ./settings;
-      ".config/hypr/settings_init.lua".text = let
-        luaFiles =
-          builtins.filter (f: builtins.match ".*\\.lua" f != null)
-          (builtins.attrNames (builtins.readDir ./settings));
-        requires = map (f: ''require("settings.${builtins.replaceStrings [".lua"] [""] f}")'') luaFiles;
-      in
-        builtins.concatStringsSep "\n" requires;
+
+      # Explicit initialization replaces the fragile builtins.readDir logic.
+      # This ensures predictable loading order and prevents crashes if non-Lua
+      # or temporary files are accidentally placed in the settings directory.
+      ".config/hypr/settings_init.lua".text = ''
+        require("settings.env")
+        require("settings.theme")
+        require("settings.animations")
+        require("settings.decoration")
+        require("settings.general")
+        require("settings.gestures")
+        require("settings.group")
+        require("settings.input")
+        require("settings.misc")
+        require("settings.rules")
+        require("settings.scrolling")
+        require("settings.noctalia")
+        require("settings.execs")
+        require("settings.keybinds")
+      '';
     };
   };
 }

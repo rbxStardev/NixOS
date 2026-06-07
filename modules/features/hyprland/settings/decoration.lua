@@ -1,3 +1,6 @@
+--- @module decoration
+--- @desc Visual styling including rounding, blur effects, and drop shadows.
+
 local vars = require("variables")
 
 hl.config({

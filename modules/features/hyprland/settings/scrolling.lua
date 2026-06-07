@@ -1,3 +1,6 @@
+--- @module scrolling
+--- @desc Configures the scrolling infinite-tape layout behavior.
+
 hl.config({
 	scrolling = {
 		column_width = 0.5,

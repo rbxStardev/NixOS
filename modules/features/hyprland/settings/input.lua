@@ -1,3 +1,6 @@
+--- @module input
+--- @desc Hardware input settings for keyboard layouts, repeat rates, and touchpad behaviors.
+
 local vars = require("variables")
 
 hl.config({

@@ -1,8 +1,19 @@
+--- @module rules
+--- @desc Target-specific overrides for windows, layers, and workspaces based on regex matching.
+
 local vars = require("variables")
 
+-- ==========================================
+-- [ Workspace Rules ]
+-- ==========================================
+-- Implement "smart gaps" (no gaps when only one window exists)
 hl.workspace_rule({ workspace = "w[tv1]s[false]", gaps_out = vars.singleWindowGapsOut })
 hl.workspace_rule({ workspace = "f[4]s[false]", gaps_out = vars.singleWindowGapsOut })
 
+-- ==========================================
+-- [ Layer Rules ]
+-- ==========================================
+-- Apply fade animation to background overlay layers
 local fadeLayers = { "hyprpicker", "logout_dialog", "selection", "wayfreeze" }
 for _, ns in ipairs(fadeLayers) do
 	hl.layer_rule({ name = "fade-" .. ns, match = { namespace = ns }, animation = "fade" })
@@ -29,12 +40,17 @@ hl.layer_rule({
 	no_anim = true,
 })
 
+-- ==========================================
+-- [ Window Rules ]
+-- ==========================================
+-- Global overrides
 hl.window_rule({
 	name = "global-opacity",
 	match = { fullscreen = false },
-	opacity = vars.windowOpacity .. " override",
+	opacity = tostring(vars.windowOpacity) .. " override",
 })
 
+-- Force specific productivity/media apps to be fully opaque
 hl.window_rule({
 	name = "opaque-apps",
 	match = {
@@ -43,16 +59,19 @@ hl.window_rule({
 	opaque = true,
 })
 
+-- Center natively floating windows (e.g. Wayland dialogs)
 hl.window_rule({
 	name = "center-float-native",
 	match = { float = true, xwayland = false },
 	center = true,
 })
 
+-- Force specific apps to float
 local floatApps =
 	"guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|org.quickshell|^ueberzugpp_.*"
 hl.window_rule({ name = "auto-float-apps", match = { class = floatApps }, float = true })
 
+-- Float system dialogs and file operations
 hl.window_rule({
 	name = "system-dialogs",
 	match = {
@@ -61,6 +80,7 @@ hl.window_rule({
 	float = true,
 })
 
+-- Hidden utilities fixes
 hl.window_rule({
 	name = "ueberzugpp",
 	match = { class = "^(ueberzugpp.*)$" },
@@ -70,30 +90,30 @@ hl.window_rule({
 	no_initial_focus = true,
 })
 
+-- Specific UI dimension rules
 hl.window_rule({
 	name = "nmtui-foot",
 	match = { class = "foot", title = "nmtui" },
 	float = true,
 	size = "60% 70%",
-	center = 1,
+	center = true,
 })
-
 hl.window_rule({
 	name = "gnome-settings",
 	match = { class = "org.gnome.Settings" },
 	float = true,
 	size = "70% 80%",
-	center = 1,
+	center = true,
 })
-
 hl.window_rule({
 	name = "pavucontrol-fix",
 	match = { class = "org.pulseaudio.pavucontrol|yad-icon-browser" },
 	float = true,
 	size = "60% 70%",
-	center = 1,
+	center = true,
 })
 
+-- Force specific applications into designated special workspaces
 hl.window_rule({ name = "ws-sysmon", match = { class = "btop" }, workspace = "special:sysmon" })
 hl.window_rule({
 	name = "ws-music",
@@ -107,6 +127,7 @@ hl.window_rule({
 })
 hl.window_rule({ name = "ws-todo", match = { class = "Todoist" }, workspace = "special:todo" })
 
+-- Gaming and Steam tweaks
 hl.window_rule({ name = "steam-rounding", match = { class = "steam" }, rounding = 10 })
 hl.window_rule({ name = "steam-friends", match = { class = "steam", title = "Friends List" }, float = true })
 hl.window_rule({
@@ -117,15 +138,17 @@ hl.window_rule({
 	idle_inhibit = "always",
 })
 
+-- XWayland contextual menu artifact fixes
 hl.window_rule({
 	name = "xwayland-menu-fix",
-	match = { xwayland = 1, title = "win[4, 8-15]+" },
+	match = { xwayland = true, title = "win[4, 8-15]+" },
 	no_blur = true,
 	no_dim = true,
 	no_shadow = true,
 	rounding = 10,
 })
 
+-- Picture-in-Picture layout
 hl.window_rule({
 	name = "pip-mode",
 	match = { title = "Picture(-| )in(-| )[Pp]icture" },

@@ -1,3 +1,6 @@
+--- @module group
+--- @desc Configures tabbed window groupings and their top bar styling.
+
 hl.config({
 	group = {
 		groupbar = {

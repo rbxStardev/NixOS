@@ -1,2 +1,7 @@
-{"workspace":{"library":["/run/current-system/sw/share/hypr/stubs"]}}
-
+{
+  "workspace": {
+    "library": [
+      "/run/current-system/sw/share/hypr/stubs"
+    ]
+  }
+}

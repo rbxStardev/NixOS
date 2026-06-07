@@ -1,3 +1,6 @@
+--- @module misc
+--- @desc Miscellaneous compositor tweaks such as background colors and VRR.
+
 hl.config({
 	misc = {
 		allow_session_lock_restore = true,

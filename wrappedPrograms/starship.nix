@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/starship.nix
+# ==============================================================================
+# Wraps and configures Starship, a cross-shell prompt, injecting a custom
+# Gruvbox-based palette and module layout natively through Nix.
+# ==============================================================================
 {
   self,
   inputs,

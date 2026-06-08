@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/noctalia/plugins.nix
+# ==============================================================================
+# Injects pre-installed plugins into the Noctalia shell wrapper directly
+# from the flake inputs, avoiding runtime downloads and ensuring reproducibility.
+# ==============================================================================
 {inputs, ...}: {
   flake.wrappersModules.noctalia-shell = {
     preInstalledPlugins = {

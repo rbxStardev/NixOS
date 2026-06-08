@@ -1,5 +1,19 @@
+# ==============================================================================
+# FILE: modules/features/sddm-astronaut-theme.nix
+# ==============================================================================
+# Fetches, builds, and configures the highly customizable "Astronaut" theme
+# for the SDDM Display Manager. Modifies the underlying derivation to inject
+# user-selected theme variants dynamically.
+# ==============================================================================
 {self, ...}: {
-  perSystem = {pkgs, ...}: {
+  # ----------------------------------------------------------------------------
+  # Package Definition
+  # ----------------------------------------------------------------------------
+  perSystem = {
+    pkgs,
+    lib,
+    ...
+  }: {
     packages.sddm-astronaut-theme = pkgs.stdenv.mkDerivation {
       pname = "sddm-astronaut-theme";
       version = "d73842c761f7d7859f3bdd80e4360f09180fad41";
@@ -14,10 +28,11 @@
       dontBuild = true;
       dontWrapQtApps = true;
 
-      nativeBuildInputs = with pkgs; [
-        qt6Packages.qtsvg
-        qt6Packages.qtvirtualkeyboard
-        qt6Packages.qtmultimedia
+      # Explicit dependencies required by the QML components of the theme
+      nativeBuildInputs = [
+        pkgs.qt6Packages.qtsvg
+        pkgs.qt6Packages.qtvirtualkeyboard
+        pkgs.qt6Packages.qtmultimedia
       ];
 
       installPhase = ''
@@ -28,25 +43,31 @@
         cp -r $src/Fonts/. $out/share/fonts
       '';
 
-      meta = with pkgs.lib; {
-        description = "sddm-astronaut-theme is a series of themes for the SDDM display manager made by Keyitdev.";
+      meta = {
+        description = "SDDM Astronaut Theme Series made by Keyitdev.";
         homepage = "https://github.com/Keyitdev/sddm-astronaut-theme";
-        license = licenses.gpl3Plus;
-        platforms = platforms.linux;
+        license = lib.licenses.gpl3Plus;
+        platforms = lib.platforms.linux;
       };
     };
   };
 
+  # ----------------------------------------------------------------------------
+  # NixOS Module Integration
+  # ----------------------------------------------------------------------------
   flake.nixosModules.sddm-astronaut = {
     config,
     lib,
     pkgs,
     ...
   }: let
+    inherit (lib) mkEnableOption mkOption types mkIf;
     cfg = config.services.displayManager.sddm.astronaut;
 
     baseThemePkg = self.packages.${pkgs.stdenv.hostPlatform.system}.sddm-astronaut-theme;
 
+    # A wrapper derivation that alters the configuration file within the theme
+    # directory before injecting it into the system, avoiding read-only errors.
     configuredThemePkg = pkgs.stdenv.mkDerivation {
       pname = "sddm-astronaut-theme-configured";
       inherit (baseThemePkg) version;
@@ -57,16 +78,19 @@
         mkdir -p $out
         cp -aR $src/* $out/
 
+        # Grant write permissions to modify the metadata file
         chmod -R +w $out/share/sddm/themes/sddm-astronaut-theme
 
+        # Replace the default config pointer with the user-selected variant
         sed -i 's|^ConfigFile=.*|ConfigFile=Themes/${cfg.theme}.conf|' $out/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
       '';
     };
   in {
     options.services.displayManager.sddm.astronaut = {
-      enable = lib.mkEnableOption "SDDM Astronaut Theme Series";
-      theme = lib.mkOption {
-        type = lib.types.enum [
+      enable = mkEnableOption "SDDM Astronaut Theme Series integration";
+
+      theme = mkOption {
+        type = types.enum [
           "astronaut"
           "black_hole"
           "cyberpunk"
@@ -79,11 +103,11 @@
           "purple_leaves"
         ];
         default = "astronaut";
-        description = "Which theme should be used for the astronaut series.";
+        description = "Specifies which specific variation of the astronaut theme to apply.";
       };
     };
 
-    config = lib.mkIf cfg.enable {
+    config = mkIf cfg.enable {
       services.displayManager.sddm.theme = "sddm-astronaut-theme";
 
       environment.systemPackages = [

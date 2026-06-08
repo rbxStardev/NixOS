@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/foot.nix
+# ==============================================================================
+# Wraps the Foot terminal emulator (Wayland native). Dynamically resolves
+# colors from the system-wide Gruvbox theme to ensure visual consistency.
+# ==============================================================================
 {
   self,
   inputs,
@@ -8,18 +14,19 @@
     lib,
     ...
   }: let
+    # Retrieve the global theme palette without '#' symbols (required by Foot)
     colors = self.themeNoHash;
   in {
     options.shell = lib.mkOption {
       type = lib.types.str;
       default = "";
+      description = "Path to the default shell executable to run inside Foot.";
     };
 
     config = {
       settings = {
         main = {
           shell = lib.mkIf (config.shell != "") config.shell;
-
           font = "JetBrainsMono Nerd Font:size=12";
         };
 
@@ -32,6 +39,7 @@
           lines = 10000;
         };
 
+        # Map the global palette to Foot's 16-color ANSI scheme
         colors-dark = {
           alpha = "0.78";
 

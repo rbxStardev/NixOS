@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/tmux.nix
+# ==============================================================================
+# Configures tmux, setting the base index, default shell, true-color support,
+# and installing plugins like the gruvbox theme and better-mouse-mode.
+# ==============================================================================
 {
   self,
   inputs,
@@ -8,6 +14,7 @@
     lib,
     ...
   }: {
+    # Dynamically resolve the custom wrapped environment to be the default shell
     shell = lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.environment;
     prefix = "C-a";
     baseIndex = 1;
@@ -38,6 +45,7 @@
       }
     ];
 
+    # Custom keybinds for simpler pane splitting and window creation
     configAfter = ''
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"

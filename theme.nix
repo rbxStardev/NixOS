@@ -1,29 +1,39 @@
-let
+# ==============================================================================
+# FILE: theme.nix
+# ==============================================================================
+# Defines the global color palette (Gruvbox-inspired) to be used across the OS.
+# Exposes the theme configuration as a flake-level output so any module can
+# reference these variables uniformly.
+# ==============================================================================
+{lib, ...}: let
+  # The base16 color palette representing the system-wide theme.
   theme = {
-    base00 = "#242424"; # bg
-    base01 = "#3c3836"; # dark
-    base02 = "#504945";
-    base03 = "#665c54";
-    base04 = "#bdae93";
-    base05 = "#d5c4a1";
-    base06 = "#ebdbb2"; # fg
-    base07 = "#fbf1c7"; # light fg
-    base08 = "#fb4934"; # red
-    base09 = "#fe8019"; # orange
-    base0A = "#fabd2f"; # yellow
-    base0B = "#b8bb26"; # green
-    base0C = "#8ec07c"; # cyan
-    base0D = "#7daea3"; # blue
-    base0E = "#e089a1"; # magenta
-    base0F = "#f28534"; # orange
+    base00 = "#242424"; # Background
+    base01 = "#3c3836"; # Darker background / Status bars
+    base02 = "#504945"; # Selection background
+    base03 = "#665c54"; # Comments / Invisibles
+    base04 = "#bdae93"; # Dark foreground
+    base05 = "#d5c4a1"; # Default foreground
+    base06 = "#ebdbb2"; # Light foreground
+    base07 = "#fbf1c7"; # Lightest foreground
+    base08 = "#fb4934"; # Red
+    base09 = "#fe8019"; # Orange
+    base0A = "#fabd2f"; # Yellow
+    base0B = "#b8bb26"; # Green
+    base0C = "#8ec07c"; # Cyan
+    base0D = "#7daea3"; # Blue
+    base0E = "#e089a1"; # Magenta
+    base0F = "#f28534"; # Brown / Dark Orange
   };
 
+  # Helper function to remove the '#' prefix from color hex codes,
+  # required by certain applications that don't support the hash symbol.
   stripHash = str:
-    if builtins.substring 0 1 str == "#"
-    then builtins.substring 1 (builtins.stringLength str - 1) str
+    if lib.hasPrefix "#" str
+    then lib.substring 1 (lib.stringLength str - 1) str
     else str;
 
-  themeNoHash = builtins.mapAttrs (_: stripHash) theme;
+  themeNoHash = lib.mapAttrs (_: stripHash) theme;
 in {
   flake = {
     inherit theme themeNoHash;

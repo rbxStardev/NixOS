@@ -1,10 +1,19 @@
+// =============================================================================
+// FILE: wrappedPrograms/rmpc/config.ron
+// =============================================================================
+// Rusty Music Player Client (RMPC) main configuration file.
+// Uses RON (Rusty Object Notation) to define layout, theming and tabs.
+// =============================================================================
+
 #![enable(implicit_some)]
 #![enable(unwrap_newtypes)]
 #![enable(unwrap_variant_newtypes)]
 (
+    // MPD server address
     address: "127.0.0.1:6600",
     theme: "gruvbox",
     
+    // Album art rendering using Sixel for terminal support
     album_art: (
         method: Sixel,
         max_size_px: (width: 0, height: 0),
@@ -17,6 +26,7 @@
     enable_mouse: true,
     enable_config_hot_reload: true,
     
+    // Define the primary views inside the terminal client
     tabs: [
         (
             name: "Queue",

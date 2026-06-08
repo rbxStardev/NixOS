@@ -1,3 +1,10 @@
+# ==============================================================================
+# FILE: wrappedPrograms/fastfetch.nix
+# ==============================================================================
+# Wraps the fastfetch CLI system information tool.
+# Injects a custom ASCII logo and configures the output layout to match the
+# Gruvbox theme provided by the global flake configuration.
+# ==============================================================================
 {
   self,
   inputs,
@@ -6,6 +13,7 @@
   flake.wrappersModules.fastfetch = {pkgs, ...}: let
     theme = self.theme;
 
+    # Custom ASCII logo defining color markers mapped to fastfetch JSON later
     customLogo = pkgs.writeText "fastfetch-logo.txt" ''
            $1_   $4___    _
           $1+o\  $4\  \  / \
@@ -29,11 +37,12 @@
       logo = {
         type = "file";
         source = "${customLogo}";
+        # Maps the $1, $2, $3, $4 markers in the ASCII art to our theme hex codes
         color = {
-          "1" = theme.base0B; #green
-          "2" = theme.base0A; #yellow
-          "3" = theme.base09; #orange
-          "4" = theme.base05; #normal
+          "1" = theme.base0B; # Green
+          "2" = theme.base0A; # Yellow
+          "3" = theme.base09; # Orange
+          "4" = theme.base05; # Normal Foreground
         };
         padding = {
           top = 8;

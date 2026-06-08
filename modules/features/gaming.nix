@@ -1,42 +1,46 @@
+# ==============================================================================
+# FILE: modules/features/gaming.nix
+# ==============================================================================
+# Aggregates gaming dependencies, including Steam, GameMode, and Gamescope
+# for micro-compositing and performance enhancements.
+# ==============================================================================
 {
-  flake.nixosModules.gaming = {pkgs, ...}: let
-    jsab = pkgs.makeDesktopItem {
-      name = "just-shapes-and-beats";
-      desktopName = "Just Shapes and Beats";
-      comment = "Play this game on Steam";
-      exec = "steam steam://rungameid/10725085396061913088";
-      icon = "/home/star/Games/Just Shapes and Beats v1.6.50/icon.png";
-      categories = ["Game"];
-      terminal = false;
-    };
-
-    legoBatmanLotDK = pkgs.makeDesktopItem {
-      name = "lego-batman";
-      desktopName = "LEGO Batman: Legacy of the Dark Knight";
-      comment = "Play this game on Steam";
-      exec = "steam steam://rungameid/9700019291125972992";
-      icon = "/home/star/Games/LEGO Batman - Legacy of the Dark Knight/icon.png";
-      categories = ["Game"];
-      terminal = false;
-    };
+  flake.nixosModules.gaming = {
+    pkgs,
+    config,
+    lib,
+    ...
+  }: let
+    inherit (lib) mkEnableOption mkIf;
+    cfg = config.features.gaming;
   in {
-    hardware.graphics.enable = true;
+    options.features.gaming = {
+      enable = mkEnableOption "Gaming utilities, Steam, and performance tools";
+    };
 
-    environment.systemPackages = [
-      pkgs.hydralauncher
+    config = mkIf cfg.enable {
+      # Ensure 3D acceleration and graphics APIs (Vulkan/OpenGL) are enabled
+      hardware.graphics.enable = true;
 
-      jsab
-      legoBatmanLotDK
-    ];
+      environment.systemPackages = [
+        pkgs.hydralauncher
+      ];
 
-    programs = {
-      gamemode.enable = true;
-      gamescope.enable = true;
-      steam = {
-        enable = true;
-        protontricks.enable = true;
-        remotePlay.openFirewall = true;
-        dedicatedServer.openFirewall = true;
+      programs = {
+        # Feral Interactive's GameMode daemon for CPU/GPU optimizations
+        gamemode.enable = true;
+
+        # Valve's micro-compositor for resolution scaling and frame pacing
+        gamescope.enable = true;
+
+        steam = {
+          enable = true;
+          protontricks.enable = true;
+          # Automatically open firewall ports for local network streaming
+          remotePlay.openFirewall = true;
+          # Automatically open firewall ports for Source engine dedicated servers
+          dedicatedServer.openFirewall = true;
+        };
       };
     };
   };

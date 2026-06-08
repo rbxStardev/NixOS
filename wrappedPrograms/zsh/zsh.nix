@@ -1,13 +1,15 @@
+# ==============================================================================
+# FILE: wrappedPrograms/zsh/zsh.nix
+# ==============================================================================
+# ZSH shell wrapper configuration. Sets up aliases, history limits,
+# completions, and injects the custom initialization script.
+# ==============================================================================
 {
   self,
   inputs,
   ...
 }: {
   flake.wrappersModules.zsh = {
-    config,
-    lib,
-    ...
-  }: {
     settings = {
       shellAliases = {
         stop = "shutdown now";
@@ -20,7 +22,6 @@
       };
 
       completion.enable = true;
-
       autoSuggestions.enable = true;
 
       history = {

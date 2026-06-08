@@ -1,3 +1,10 @@
+// =============================================================================
+// FILE: wrappedPrograms/rmpc/themes/gruvbox.ron
+// =============================================================================
+// Gruvbox theme definition for RMPC. Maps internal UI components to specific
+// hex color codes matching the system-wide aesthetic.
+// =============================================================================
+
 #![enable(implicit_some)]
 #![enable(unwrap_newtypes)]
 #![enable(unwrap_variant_newtypes)]
@@ -7,7 +14,7 @@
     multiple_tag_resolution_strategy: All,
     browser_column_widths: [20, 38, 42],
     
-    // Cores base Gruvbox
+    // Base Gruvbox colors
     background_color: "#282828",
     modal_backdrop: true,
     text_color: "#ebdbb2",
@@ -456,10 +463,10 @@
         bar_width: 1, bar_spacing: 1,
         bg_color: "#282828",
         bar_color: Gradient({
-                0:   "#cc241d", // Vermelho
-                33:  "#d65d0e", // Laranja
-                67:  "#fabd2f", // Amarelo
-                100: "#b8bb26", // Verde
+                0:   "#cc241d", // Red
+                33:  "#d65d0e", // Orange
+                67:  "#fabd2f", // Yellow
+                100: "#b8bb26", // Green
             })
     ),
     lyrics:(
@@ -468,7 +475,7 @@
     ),
     border_symbol_sets: {
     "straight_collapsed_top": (
-        parent: Plain, // Substitui Rounded por Plain para linhas retas/quadradas
+        parent: Plain, // Replace Rounded with Plain for straight lines
         top_left: "├",
         top_right: "┤",
         ),

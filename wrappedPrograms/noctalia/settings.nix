@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/noctalia/settings.nix
+# ==============================================================================
+# Defines the massive UI layout and behavior configuration for Noctalia.
+# Maps app launchers, control center layout, bar widgets, and dynamic assets.
+# ==============================================================================
 {config, ...}: {
   flake.wrappersModules.noctalia-shell = {
     settings = {
@@ -66,43 +72,21 @@
         showOnWorkspaceSwitch = true;
         widgets = {
           left = [
-            {
-              id = "Launcher";
-            }
-            {
-              id = "Clock";
-            }
-            {
-              id = "SystemMonitor";
-            }
-            {
-              id = "ActiveWindow";
-            }
-            {
-              id = "MediaMini";
-            }
+            {id = "Launcher";}
+            {id = "Clock";}
+            {id = "SystemMonitor";}
+            {id = "ActiveWindow";}
+            {id = "MediaMini";}
           ];
           center = [
-            {
-              id = "Workspace";
-            }
+            {id = "Workspace";}
           ];
           right = [
-            {
-              id = "Tray";
-            }
-            {
-              id = "NotificationHistory";
-            }
-            {
-              id = "Battery";
-            }
-            {
-              id = "Volume";
-            }
-            {
-              id = "Brightness";
-            }
+            {id = "Tray";}
+            {id = "NotificationHistory";}
+            {id = "Battery";}
+            {id = "Volume";}
+            {id = "Brightness";}
             {
               colorizeDistroLogo = true;
               colorizeSystemIcon = "tertiary";
@@ -111,9 +95,7 @@
               id = "ControlCenter";
               useDistroLogo = true;
             }
-            {
-              id = "plugin:special-workspaces";
-            }
+            {id = "plugin:special-workspaces";}
           ];
         };
         mouseWheelAction = "none";
@@ -165,35 +147,17 @@
         diskPath = "/";
         shortcuts = {
           left = [
-            {
-              id = "Network";
-            }
-            {
-              id = "Bluetooth";
-            }
-            {
-              id = "WallpaperSelector";
-            }
-            {
-              id = "NoctaliaPerformance";
-            }
+            {id = "Network";}
+            {id = "Bluetooth";}
+            {id = "WallpaperSelector";}
+            {id = "NoctaliaPerformance";}
           ];
           right = [
-            {
-              id = "Notifications";
-            }
-            {
-              id = "PowerProfile";
-            }
-            {
-              id = "KeepAwake";
-            }
-            {
-              id = "NightLight";
-            }
-            {
-              id = "plugin:privacy-indicator";
-            }
+            {id = "Notifications";}
+            {id = "PowerProfile";}
+            {id = "KeepAwake";}
+            {id = "NightLight";}
+            {id = "plugin:privacy-indicator";}
           ];
         };
         cards = [
@@ -227,8 +191,7 @@
         monitorWidgets = [
           {
             name = "eDP-1";
-            widgets = [
-            ];
+            widgets = [];
           }
         ];
       };
@@ -264,6 +227,7 @@
         indicatorOpacity = 0.6;
       };
       general = {
+        # Dynamically resolved from the assets module
         avatarImage = toString config.assets.avatarPicture;
         dimmerOpacity = 0.2;
         showScreenCorners = false;
@@ -295,34 +259,18 @@
         autoStartAuth = false;
         allowPasswordWithFprintd = false;
         clockStyle = "digital";
-        # clockFormat = "hh\nmm";
         passwordChars = true;
         lockScreenMonitors = [];
         lockScreenBlur = 0;
         lockScreenTint = 0;
         keybinds = {
-          keyUp = [
-            "Up"
-          ];
-          keyDown = [
-            "Down"
-          ];
-          keyLeft = [
-            "Left"
-          ];
-          keyRight = [
-            "Right"
-          ];
-          keyEnter = [
-            "Return"
-            "Enter"
-          ];
-          keyEscape = [
-            "Esc"
-          ];
-          keyRemove = [
-            "Del"
-          ];
+          keyUp = ["Up"];
+          keyDown = ["Down"];
+          keyLeft = ["Left"];
+          keyRight = ["Right"];
+          keyEnter = ["Return" "Enter"];
+          keyEscape = ["Esc"];
+          keyRemove = ["Del"];
         };
         reverseScroll = false;
         smoothScrollEnabled = true;
@@ -429,11 +377,7 @@
         autoHideMs = 2000;
         overlayLayer = true;
         backgroundOpacity = 1;
-        enabledTypes = [
-          0
-          1
-          2
-        ];
+        enabledTypes = [0 1 2];
         monitors = [];
       };
       plugins = {
@@ -568,11 +512,7 @@
         wallpaperChangeMode = "random";
         randomIntervalSec = 300;
         transitionDuration = 600;
-        transitionType = [
-          "stripes"
-          "pixelate"
-          "honeycomb"
-        ];
+        transitionType = ["stripes" "pixelate" "honeycomb"];
         skipStartupTransition = false;
         transitionEdgeSmoothness = 0.05;
         panelPosition = "follow_bar";

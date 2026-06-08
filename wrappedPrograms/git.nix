@@ -1,3 +1,10 @@
+# ==============================================================================
+# FILE: wrappedPrograms/git.nix
+# ==============================================================================
+# Wraps the Git binary with default environment variables for author and
+# committer identities, ensuring consistent commits system-wide without needing
+# a global ~/.gitconfig file.
+# ==============================================================================
 {inputs, ...}: {
   perSystem = {pkgs, ...}: {
     packages.git = inputs.wrappers.lib.wrapPackage {

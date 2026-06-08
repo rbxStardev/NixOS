@@ -1,17 +1,27 @@
+# ==============================================================================
+# FILE: wrappedPrograms/noctalia/noctalia.nix
+# ==============================================================================
+# Base wrapper for Noctalia-shell (a Quickshell-based DE component).
+# Defines core application properties, cache directories, and the foundational
+# color palette (Material You / Gruvbox inspired) used across all widgets.
+# ==============================================================================
 {
   self,
   inputs,
   ...
 }: {
   flake.wrappersModules.noctalia-shell = {pkgs, ...}: {
+    # Override the base package name
     package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
       name = "starnoctalia";
     };
 
-    #outOfStoreConfig = "~/.config/noctalia-shell";
+    # Force a specific cache directory to prevent state corruption
+    env = {
+      NOCTALIA_CACHE_DIR = "/tmp/star-noctalia-cache";
+    };
 
-    env.NOCTALIA_CACHE_DIR = "/tmp/star-noctalia-cache";
-
+    # Global Material Design color mapping
     colors = {
       mError = "#fb4934";
       mHover = "#83a598";

@@ -1,15 +1,28 @@
+# ==============================================================================
+# FILE: wrappedPrograms/helix.nix
+# ==============================================================================
+# Wraps the Helix editor, setting it up as a fully-featured IDE.
+# Configures Language Servers (LSPs), formatters, and debuggers for multiple
+# languages like Rust, Lua, Nix, C#, and XML.
+# ==============================================================================
 {
   self,
   inputs,
   ...
 }: {
-  flake.wrappersModules.helix = {config, ...}: {
+  flake.wrappersModules.helix = {
     settings = {
       theme = "gruvbox_dark_hard";
       editor = {
         bufferline = "multiple";
         color-modes = true;
         popup-border = "all";
+
+        lsp = {
+          display-inlay-hints = true;
+        };
+
+        # Custom statusline layout for better visibility of modes and diagnostics
         statusline = {
           left = ["mode" "spinner" "spacer" "version-control" "file-name" "file-modification-indicator"];
           center = [];
@@ -23,16 +36,19 @@
           diagnostics = ["warning" "error"];
           workspace-diagnostics = ["warning" "error"];
         };
+
         cursor-shape = {
           insert = "bar";
           normal = "bar";
           select = "underline";
         };
+
         indent-guides.render = true;
       };
     };
 
     languages = {
+      # Language specific configurations mapping formats and LSPs
       language = [
         {
           name = "rust";
@@ -122,6 +138,8 @@
           ];
         }
       ];
+
+      # Explicit Language Server settings
       language-server = {
         rust-analyzer = {
           command = "rust-analyzer";
@@ -139,6 +157,10 @@
             };
           };
         };
+
+        # Nixd requires explicit evaluation context of the local flake
+        # Note: Hardcoded path is kept to preserve current logic, but ideally
+        # this should dynamically resolve based on the user's home directory.
         nixd = {
           command = "nixd";
           config.nixd = {
@@ -149,6 +171,7 @@
             };
           };
         };
+
         qmlls = {
           command = "qmlls";
           args = ["-E"];

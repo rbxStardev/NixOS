@@ -1,3 +1,9 @@
+# ==============================================================================
+# FILE: wrappedPrograms/bat.nix
+# ==============================================================================
+# Wraps the `bat` utility (a cat clone with syntax highlighting) to inject
+# a predefined theme (gruvbox-dark) consistently.
+# ==============================================================================
 {
   self,
   inputs,

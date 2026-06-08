@@ -13,7 +13,7 @@ hl.config({
 		middle_click_paste = false,
 		on_focus_under_fullscreen = 2,
 		session_lock_xray = true,
-		vrr = 0,
+		vrr = 2,
 	},
 
 	debug = {

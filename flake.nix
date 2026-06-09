@@ -35,39 +35,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Noctalia Shell and its plugins
     noctalia = {
       url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia-plugins = {
-      url = "github:noctalia-dev/legacy-v4-plugins";
-      flake = false;
-    };
-
-    # External themes
-    alacritty-theme.url = "github:alexghr/alacritty-theme.nix";
   };
 
   outputs = inputs: let
     inherit (inputs.nixpkgs) lib;
     inherit (lib.fileset) toList fileFilter;
 
-    # Determines if a file is a valid Nix module to be auto-imported.
-    # Excludes the main flake.nix and any file prefixed with an underscore (_).
     isNixModule = file:
       file.hasExt "nix"
       && file.name != "flake.nix"
       && !lib.hasPrefix "_" file.name;
 
-    # Recursively finds and lists all valid Nix modules in a given path.
     importTree = path: toList (fileFilter isNixModule path);
 
-    # Initialize flake-parts
     mkFlake = inputs.flake-parts.lib.mkFlake {inherit inputs;};
   in
     mkFlake {
-      # Automatically import every `.nix` file in the repository into the flake-parts module system.
       imports = importTree ./.;
       debug = true;
     };

@@ -1,21 +1,21 @@
---- @module keybinds
---- @desc Maps keyboard combinations to compositor actions, applications, and IPC commands.
+--- Maps keyboard combinations to compositor actions, applications, and IPC commands.
+-- @module keybinds
 
 local vars = require("variables")
 local noctalia = require("settings.noctalia")
 
 -- ==========================================
--- [ Shell & Noctalia Integration ]
+-- [ Shell & Noctalia v5 Integration ]
 -- ==========================================
-hl.bind(vars.kbSession, noctalia.action("sessionMenu toggle"))
-hl.bind(vars.kbLock, noctalia.action("sessionMenu lock"))
-hl.bind(vars.kbWallpaperPicker, noctalia.action("plugin:wallcards toggle"))
-hl.bind("Print", noctalia.action("plugin:screen-shot-and-record screenshot"))
-hl.bind("SUPER + SHIFT + S", noctalia.action("plugin:screen-shot-and-record screenshot"))
-hl.bind("SUPER + V", noctalia.action("plugin:clipper toggle"))
-hl.bind("SUPER + Period", noctalia.action("launcher emoji"))
-hl.bind(vars.kbClearNotifs, noctalia.action("notifications clear"), { locked = true })
-hl.bind(vars.kbRestoreLock, noctalia.action("sessionMenu lock"), { locked = true })
+hl.bind(vars.kbSession, noctalia.action("panel-toggle session"))
+hl.bind(vars.kbLock, noctalia.action("session lock"))
+hl.bind(vars.kbWallpaperPicker, noctalia.action("panel-toggle wallpaper"))
+hl.bind("Print", noctalia.action("screenshot-region"))
+hl.bind("SUPER + SHIFT + S", noctalia.action("screenshot-region"))
+hl.bind("SUPER + V", noctalia.action("panel-toggle clipboard"))
+hl.bind("SUPER + Period", noctalia.action("panel-toggle launcher /emo"))
+hl.bind(vars.kbClearNotifs, noctalia.action("notification-clear-active"), { locked = true })
+hl.bind(vars.kbRestoreLock, noctalia.action("session lock"), { locked = true })
 
 -- ==========================================
 -- [ Application Launchers ]
@@ -24,7 +24,7 @@ hl.bind(vars.kbTerminal, hl.dsp.exec_cmd(vars.terminal))
 hl.bind(vars.kbBrowser, hl.dsp.exec_cmd(vars.browser))
 hl.bind(vars.kbEditor, hl.dsp.exec_cmd(vars.terminal .. " -e " .. vars.editor))
 hl.bind(vars.kbFileExplorer, hl.dsp.exec_cmd(vars.terminal .. " -e " .. vars.fileExplorer))
-hl.bind("SUPER + SUPER_L", noctalia.action("launcher toggle"), { release = true })
+hl.bind("SUPER + SUPER_L", noctalia.action("panel-toggle launcher"), { release = true })
 
 -- ==========================================
 -- [ Window Management ]
@@ -56,21 +56,18 @@ end
 -- ==========================================
 -- [ Workspaces & Paging ]
 -- ==========================================
---- @desc Dynamically creates keybinds for workspaces 1 through 10.
+-- Dynamically creates keybinds for workspaces 1 through 10.
 for i = 1, 10 do
 	local key = i % 10
 
-	-- Standard workspace focusing and moving
 	hl.bind(vars.kbGoToWs .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(vars.kbMoveWinToWs .. " + " .. key, hl.dsp.window.move({ workspace = i }))
 
-	-- Complex Group Workspace Logic using Lambda functions
-	-- Requires explicit hl.dispatch() to execute the generated table.
 	hl.bind(vars.kbGoToWsGroup .. " + " .. key, function()
 		local active_ws = hl.get_active_workspace()
 		if not active_ws then
 			return
-		end -- Fallback during initialization
+		end
 
 		local cur = active_ws.id
 		local pos = cur % 10
@@ -101,8 +98,8 @@ hl.bind("SUPER + Page_Down", hl.dsp.focus({ workspace = "+1" }), { repeating = t
 hl.bind("SUPER + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend-then-hibernate"), { locked = true })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp", noctalia.action("brightness increase"), { locked = true })
-hl.bind("XF86MonBrightnessDown", noctalia.action("brightness decrease"), { locked = true })
+hl.bind("XF86MonBrightnessUp", noctalia.action("brightness-up"), { locked = true })
+hl.bind("XF86MonBrightnessDown", noctalia.action("brightness-down"), { locked = true })
 
 -- Media Control
 hl.bind("CTRL + SUPER + Space", noctalia.action("media toggle"), { locked = true })
@@ -110,7 +107,7 @@ hl.bind("XF86AudioPlay", noctalia.action("media toggle"), { locked = true })
 hl.bind("CTRL + SUPER + Equal", noctalia.action("media next"), { locked = true })
 hl.bind("XF86AudioNext", noctalia.action("media next"), { locked = true })
 
--- Volume Control (using Wireplumber)
+-- Volume Control
 hl.bind(
 	"XF86AudioRaiseVolume",
 	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),

@@ -13,6 +13,10 @@
       withUWSM = true;
     };
 
+    imports = [
+      self.nixosModules.noctalia
+    ];
+
     hjem.users.${user}.files = {
       ".config/hypr/hyprland.lua".source = ./hyprland.lua;
       ".config/hypr/variables.lua".source = ./variables.lua;

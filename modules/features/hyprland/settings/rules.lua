@@ -1,5 +1,5 @@
---- @module rules
---- @desc Target-specific overrides for windows, layers, and workspaces based on regex matching.
+--- Target-specific overrides for windows, layers, and workspaces based on regex matching.
+-- @module rules
 
 local vars = require("variables")
 
@@ -28,16 +28,12 @@ hl.layer_rule({
 
 hl.layer_rule({
 	name = "noctalia",
-	match = { namespace = "noctalia-background-.*$" },
+	match = {
+		namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|backdrop|window-switcher)$",
+	},
+	ignore_alpha = 0.5,
 	blur = true,
 	blur_popups = true,
-	ignore_alpha = 0.5,
-})
-
-hl.layer_rule({
-	name = "region-selector-no-anim",
-	match = { namespace = "noctalia-shell:regionSelector" },
-	no_anim = true,
 })
 
 -- ==========================================
@@ -54,7 +50,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "opaque-apps",
 	match = {
-		class = "foot|equibop|org.quickshell|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot",
+		class = "foot|equibop|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot",
 	},
 	opaque = true,
 })
@@ -68,7 +64,7 @@ hl.window_rule({
 
 -- Force specific apps to float
 local floatApps =
-	"guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|org.quickshell|^ueberzugpp_.*"
+	"guifetch|yad|zenity|wev|org.gnome.FileRoller|file-roller|blueman-manager|com.github.GradienceTeam.Gradience|feh|imv|system-config-printer|^ueberzugpp_.*"
 hl.window_rule({ name = "auto-float-apps", match = { class = floatApps }, float = true })
 
 -- Float system dialogs and file operations

@@ -29,6 +29,12 @@ in {
       description = "Absolute path to the user's profile picture.";
     };
 
+    notificationSound = mkOption {
+      type = types.str;
+      default = "/home/star/Assets/Sounds/curse.wav";
+      description = "Absolute path to the sound file used for notifications.";
+    };
+
     notifCritical = mkOption {
       type = types.str;
       # default = "${homeDir}/Assets/Sounds/critical.mp3";

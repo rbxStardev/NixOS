@@ -1,9 +1,7 @@
 # ==============================================================================
 # FILE: modules/features/desktop.nix
 # ==============================================================================
-# Acts as the master profile for the graphical environment. It aggregates all
-# desktop-related modules, sets global environment variables for Wayland/Qt,
-# handles MIME types, and installs GUI utilities.
+# Acts as the master profile for the graphical environment.
 # ==============================================================================
 {self, ...}: {
   flake.nixosModules.desktop = {
@@ -20,7 +18,6 @@
       enable = mkEnableOption "Wayland desktop baseline and UI applications";
     };
 
-    # Imports MUST be at the top-level to ensure options are evaluated properly
     imports = [
       self.nixosModules.gtk
       self.nixosModules.pipewire
@@ -34,7 +31,6 @@
     ];
 
     config = mkIf cfg.enable {
-      # Automatically enable the required underlying features if desktop is enabled
       features = {
         gtk.enable = mkDefault true;
         pipewire.enable = mkDefault true;
@@ -48,7 +44,6 @@
 
       environment.systemPackages = [
         selfpkgs.terminal
-        selfpkgs.noctalia-shell
         pkgs.chafa
         pkgs.alsa-utils
         pkgs.mpv
@@ -60,7 +55,6 @@
         pkgs.mpd-discord-rpc
       ];
 
-      # File association and default application routing
       xdg.mime = {
         enable = true;
         defaultApplications = {
@@ -80,7 +74,6 @@
       services.upower.enable = true;
       security.polkit.enable = true;
 
-      # Fallback environment variables
       environment.sessionVariables = {
         QT_QPA_PLATFORMTHEME = "qt6ct";
         QT_QPA_PLATFORM = "wayland;xcb";

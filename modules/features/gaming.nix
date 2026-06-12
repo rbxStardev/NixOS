@@ -24,6 +24,10 @@
 
       environment.systemPackages = [
         pkgs.hydralauncher
+
+        (pkgs.prismlauncher.override {
+          jdks = [pkgs.graalvmPackages.graalvm-ce pkgs.zulu8 pkgs.zulu17 pkgs.zulu21 pkgs.zulu];
+        })
       ];
 
       programs = {

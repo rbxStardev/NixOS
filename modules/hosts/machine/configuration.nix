@@ -133,7 +133,15 @@
       flatpak.enable = true;
       udisks2.enable = true;
       printing.enable = true;
-      xserver.enable = true; # Underlying X11 server required by SDDM/XWayland
+
+      # Underlying X11 server required by SDDM/XWayland
+      xserver = {
+        enable = true;
+        xkb = {
+          layout = "br";
+          variant = "abnt2";
+        };
+      };
     };
 
     # ==========================================================================

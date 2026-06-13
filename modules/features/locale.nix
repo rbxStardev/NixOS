@@ -35,12 +35,32 @@
 
       console.keyMap = "br-abnt2";
 
+      services.xserver.xkb = {
+        layout = "br";
+        variant = "";
+      };
+
       # Input Method framework, crucial for multilingual input or specific
       # layout needs inside Wayland/X11
       i18n.inputMethod = {
         enable = true;
         type = "fcitx5";
-        fcitx5.addons = [pkgs.fcitx5-gtk];
+        fcitx5 = {
+          waylandFrontend = true;
+          ignoreUserConfig = true;
+          addons = [pkgs.fcitx5-gtk];
+
+          settings.inputMethod = {
+            "Groups/0" = {
+              Name = "Default";
+              "Default Layout" = "br";
+              DefaultIM = "keyboard-br";
+            };
+            "Groups/0/Items/0" = {
+              Name = "keyboard-br";
+            };
+          };
+        };
       };
     };
   };

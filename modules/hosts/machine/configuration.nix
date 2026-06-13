@@ -137,10 +137,6 @@
       # Underlying X11 server required by SDDM/XWayland
       xserver = {
         enable = true;
-        xkb = {
-          layout = "br";
-          variant = "abnt2";
-        };
       };
     };
 

@@ -42,6 +42,7 @@
         # Map the global palette to Foot's 16-color ANSI scheme
         colors-dark = {
           alpha = "0.78";
+          blur = "yes";
 
           background = colors.base00;
           foreground = colors.base07;

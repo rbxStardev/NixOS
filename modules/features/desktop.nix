@@ -53,6 +53,7 @@
         pkgs.pavucontrol
         pkgs.blueman
         pkgs.mpd-discord-rpc
+        pkgs.xdg-terminal-exec
       ];
 
       xdg.mime = {
@@ -74,6 +75,12 @@
       services.upower.enable = true;
       security.polkit.enable = true;
 
+      environment.etc = {
+        "xdg/xdg-terminals.list".text = ''
+          foot.desktop
+        '';
+      };
+
       environment.sessionVariables = {
         QT_QPA_PLATFORMTHEME = "qt6ct";
         QT_QPA_PLATFORM = "wayland;xcb";
@@ -81,6 +88,7 @@
         GDK_BACKEND = "wayland,x11";
         GTK_USE_PORTAL = "1";
         XMODIFIERS = "@im=fcitx";
+        TERMINAL = "foot";
       };
 
       hardware = {

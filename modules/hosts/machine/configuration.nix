@@ -137,6 +137,7 @@
       # Underlying X11 server required by SDDM/XWayland
       xserver = {
         enable = true;
+        desktopManager.xterm.enable = false;
       };
     };
 
@@ -165,7 +166,7 @@
       extraPortals = [pkgs.xdg-desktop-portal-gtk];
       config = {
         hyprland.default = ["hyprland" "gtk"];
-        common.default = ["gtk"];
+        common.default = ["hyprland" "gtk"];
       };
     };
 

@@ -7,10 +7,10 @@ local variables = {
 	-- ### Hyprland Core ###
 
 	-- Apps
-	terminal = "foot",
-	browser = "firefox",
-	editor = "hx",
-	fileExplorer = "yazi",
+	terminal = "uwsm app -- foot",
+	browser = "uwsm app -- firefox",
+	editor = "uwsm app -- hx",
+	fileExplorer = "uwsm app -- yazi",
 
 	-- Touchpad Settings
 	touchpadDisableTyping = true,

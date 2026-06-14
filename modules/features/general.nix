@@ -58,6 +58,7 @@
         pkgs.lazygit
 
         # Custom wrappers provided by this flake
+        selfpkgs.rust-rover
         selfpkgs.git
         selfpkgs.nix-check-bin
         selfpkgs.helix

@@ -149,8 +149,29 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
+        "rust-overlay": "rust-overlay",
         "wrapper-modules": "wrapper-modules",
         "wrappers": "wrappers"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781407245,
+        "narHash": "sha256-VzJq4MmD0uyNDAceudSe1hHqcQMe9Tau0U4S+5iRGh0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "d5f483210eb016d66102eef22baa128b3b3233fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "wrapper-modules": {

@@ -9,7 +9,7 @@
   perSystem = {pkgs, ...}: {
     packages.hyprland = inputs.wrappers.lib.wrapPackage {
       inherit pkgs;
-      package = pkgs.hyprland;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
 
       runtimeInputs = [
         pkgs.hypridle

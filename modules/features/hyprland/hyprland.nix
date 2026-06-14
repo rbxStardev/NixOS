@@ -1,4 +1,8 @@
-{self, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.hyprland = {
     pkgs,
     config,
@@ -10,11 +14,16 @@
     programs.hyprland = {
       enable = true;
       package = selfpkgs.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       withUWSM = true;
+      plugins = [
+        # inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
+      ];
     };
 
     imports = [
       self.nixosModules.noctalia
+      inputs.hyprland.nixosModules.default
     ];
 
     hjem.users.${user}.files = {

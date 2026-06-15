@@ -4,7 +4,11 @@
 # Provides general system utilities, CLI tools, wrapper packages, and the
 # default user shell environment.
 # ==============================================================================
-{self, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.general = {
     config,
     pkgs,
@@ -27,6 +31,7 @@
     imports = [
       self.nixosModules.extra_hjem
       self.nixosModules.nix
+      inputs.xdp-termfilepickers.nixosModules.default
     ];
 
     config = mkIf cfg.enable {
@@ -68,6 +73,20 @@
         selfpkgs.fastfetch
         selfpkgs.tmux
       ];
+
+      services.xdg-desktop-portal-termfilepickers = let
+        termfilepickers = inputs.xdp-termfilepickers.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+          customYazi = selfpkgs.yazi;
+          replaceYazi = true;
+        };
+      in {
+        enable = true;
+        package = termfilepickers;
+        desktopEnvironments = ["common" "hyprland"];
+        config = {
+          terminal_command = [(lib.getExe selfpkgs.terminal) "--title" "filepicker"];
+        };
+      };
 
       # Register the custom wrapper environment as a valid login shell
       environment.shells = [selfpkgs.environment];

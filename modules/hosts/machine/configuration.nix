@@ -165,8 +165,14 @@
       enable = true;
       extraPortals = [pkgs.xdg-desktop-portal-gtk];
       config = {
-        hyprland.default = ["hyprland" "gtk"];
-        common.default = ["hyprland" "gtk"];
+        hyprland = {
+          default = ["hyprland" "gtk"];
+          "org.freedesktop.impl.portal.FileChooser" = ["termfilepickers"];
+        };
+        common = {
+          default = ["hyprland" "gtk"];
+          "org.freedesktop.impl.portal.FileChooser" = ["termfilepickers"];
+        };
       };
     };
 

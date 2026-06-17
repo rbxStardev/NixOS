@@ -18,6 +18,7 @@
 
       clipboard_enabled = true;
       clipboard_history_max_entries = 50;
+      corner_radius_scale = 0;
 
       panel = {
         control_center_placement = "floating";
@@ -118,6 +119,8 @@
     wallpaper = {
       enabled = true;
       directory = toString config.assets.wallpaperDir;
+      directory_light = toString config.assets.wallpaperDir;
+      directory_dark = toString config.assets.wallpaperDir;
       transition = ["honeycomb" "stripes"];
       fill_mode = "crop";
     };
@@ -135,6 +138,7 @@
     dock = {
       enabled = true;
       auto_hide = true;
+      reserve_space = false;
       position = "bottom";
       icon_size = 32;
       radius = 0;
@@ -157,7 +161,7 @@
     audio = {
       enable_sounds = true;
       notification_sound = toString config.assets.notificationSound;
-      sound_volume = 1.0;
+      sound_volume = 1;
     };
 
     # ----------------------------------------------------------------------
@@ -195,8 +199,12 @@
     };
 
     # ----------------------------------------------------------------------
-    # Lockscreen Widgets
+    # Widgets
     # ----------------------------------------------------------------------
+    desktop_widgets = {
+      enabled = false;
+    };
+
     lockscreen_widgets = {
       enabled = true;
       schema_version = 2;

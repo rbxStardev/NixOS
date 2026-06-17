@@ -45,10 +45,6 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
-
-    xdp-termfilepickers = {
-      url = "github:Guekka/xdg-desktop-portal-termfilepickers";
-    };
   };
 
   outputs = inputs: let

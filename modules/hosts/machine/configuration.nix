@@ -40,7 +40,6 @@
       pipewire.enable = true;
       fonts.enable = true;
       desktop.enable = true;
-      gtk.enable = true;
 
       gaming.enable = true;
       discord.enable = true;
@@ -167,11 +166,9 @@
       config = {
         hyprland = {
           default = ["hyprland" "gtk"];
-          "org.freedesktop.impl.portal.FileChooser" = ["termfilepickers"];
         };
         common = {
-          default = ["hyprland" "gtk"];
-          "org.freedesktop.impl.portal.FileChooser" = ["termfilepickers"];
+          default = ["gtk"];
         };
       };
     };

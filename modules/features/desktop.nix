@@ -19,7 +19,6 @@
     };
 
     imports = [
-      self.nixosModules.gtk
       self.nixosModules.pipewire
       self.nixosModules.firefox
       self.nixosModules.chromium
@@ -32,7 +31,6 @@
 
     config = mkIf cfg.enable {
       features = {
-        gtk.enable = mkDefault true;
         pipewire.enable = mkDefault true;
         fonts.enable = mkDefault true;
         locale.enable = mkDefault true;
@@ -75,11 +73,9 @@
       services.upower.enable = true;
       security.polkit.enable = true;
 
-      environment.etc = {
-        "xdg/xdg-terminals.list".text = ''
-          foot.desktop
-        '';
-      };
+      environment.etc."xdg/xdg-terminals.list".text = ''
+        foot.desktop
+      '';
 
       environment.sessionVariables = {
         QT_QPA_PLATFORMTHEME = "qt6ct";

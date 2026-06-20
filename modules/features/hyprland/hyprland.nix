@@ -22,7 +22,6 @@
     };
 
     imports = [
-      self.nixosModules.noctalia
       inputs.hyprland.nixosModules.default
     ];
 

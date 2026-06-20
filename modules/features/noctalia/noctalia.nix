@@ -4,7 +4,11 @@
 # Core configuration for the Noctalia v5 Wayland shell.
 # Integrates the native C++ shell into the system via Hjem.
 # ==============================================================================
-{inputs, ...}: {
+{
+  inputs,
+  self,
+  ...
+}: {
   flake.nixosModules.noctalia = {
     config,
     pkgs,
@@ -13,12 +17,11 @@
     hjem = {
       extraModules = [
         inputs.noctalia.hjemModules.default
-        ../assets.nix
       ];
 
       users.${config.preferences.user.name} = {
         imports = [
-          ./_settings.nix
+          (args: import ./_settings.nix (args // {osConfig = config;}))
         ];
 
         programs.noctalia = {

@@ -25,14 +25,6 @@
       enable = mkEnableOption "General system utilities, wrapper binaries, and base shell";
     };
 
-    # Imports MUST be at the top-level
-    # NOTE: Removed self.nixosModules.gtk from here to prevent duplicate
-    # module evaluation, as it's already properly imported by desktop.nix
-    imports = [
-      self.nixosModules.extra_hjem
-      self.nixosModules.nix
-    ];
-
     config = mkIf cfg.enable {
       # System-wide packages without using the problematic `with pkgs;` anti-pattern.
       environment.systemPackages = [
@@ -71,7 +63,20 @@
         selfpkgs.bat
         selfpkgs.fastfetch
         selfpkgs.tmux
+
+        # Some other things
+        pkgs.winetricks
+        pkgs.glib
+        pkgs.qt6Packages.qt5compat
+        pkgs.qt6Packages.qtdeclarative
+        pkgs.qt6Packages.qtsvg
+        pkgs.qt6Packages.qtwayland
       ];
+
+      environment.sessionVariables = {
+        QML_IMPORT_PATH = ["/run/current-system/sw/lib/qt-6/qml"];
+        QML2_IMPORT_PATH = ["/run/current-system/sw/lib/qt-6/qml"];
+      };
 
       # Register the custom wrapper environment as a valid login shell
       environment.shells = [selfpkgs.environment];
@@ -87,6 +92,39 @@
 
       # Ensures ZSH functionality is available system-wide since it's wrapped
       programs.zsh.enable = true;
+
+      # ==========================================================================
+      # XDG portal
+      # ==========================================================================
+      xdg.portal = {
+        enable = true;
+        extraPortals = [pkgs.xdg-desktop-portal-gtk];
+        config = {
+          hyprland = {
+            default = ["hyprland" "gtk"];
+          };
+          common = {
+            default = ["gtk"];
+          };
+        };
+      };
+
+      # ==========================================================================
+      # System Services and Hardware
+      # ==========================================================================
+
+      services = {
+        hardware.openrgb.enable = true;
+        flatpak.enable = true;
+        udisks2.enable = true;
+        printing.enable = true;
+
+        # Underlying X11 server required by SDDM/XWayland
+        xserver = {
+          enable = true;
+          desktopManager.xterm.enable = false;
+        };
+      };
     };
   };
 }

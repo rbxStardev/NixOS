@@ -18,17 +18,6 @@
       enable = mkEnableOption "Wayland desktop baseline and UI applications";
     };
 
-    imports = [
-      self.nixosModules.pipewire
-      self.nixosModules.firefox
-      self.nixosModules.chromium
-      self.nixosModules.discord
-      self.nixosModules.gaming
-      self.nixosModules.hyprland
-      self.nixosModules.locale
-      self.nixosModules.fonts
-    ];
-
     config = mkIf cfg.enable {
       features = {
         pipewire.enable = mkDefault true;

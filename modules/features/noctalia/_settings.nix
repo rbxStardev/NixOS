@@ -1,16 +1,7 @@
-# ==============================================================================
-# FILE: modules/features/noctalia/_settings.nix
-# ==============================================================================
-# Declarative Noctalia v5 settings mapping.
-# This maps directly to the ~/.config/noctalia/config.toml schema.
-# ==============================================================================
-{config, ...}: {
+{osConfig, ...}: {
   programs.noctalia.settings = {
-    # ----------------------------------------------------------------------
-    # Shell & UI Globals
-    # ----------------------------------------------------------------------
     shell = {
-      avatar_path = toString config.assets.avatarPicture;
+      avatar_path = toString osConfig.assets.avatarPicture;
       font_family = "JetBrainsMono Nerd Font";
       password_style = "random";
       polkit_agent = true;
@@ -38,31 +29,22 @@
       };
     };
 
-    # ----------------------------------------------------------------------
-    # Theme & Colors
-    # ----------------------------------------------------------------------
     theme = {
       mode = "dark";
       source = "custom";
       custom_palette = "gruvbox";
     };
 
-    # ----------------------------------------------------------------------
-    # Bars
-    # ----------------------------------------------------------------------
     bar = {
-      # Defines the creation order of the bars
       order = ["main"];
 
       main = {
         radius = 0;
-
         position = "left";
         background_opacity = 0.76;
         thickness = 32;
         margin_edge = 0;
         margin_ends = 0;
-
         capsule = true;
         capsule_radius = 0.0;
         capsule_border = "primary";
@@ -74,67 +56,37 @@
       };
     };
 
-    # ----------------------------------------------------------------------
-    # Specific Widget Settings
-    # ----------------------------------------------------------------------
     widget = {
-      # Time widget (vertical layout)
-      clock = {
-        vertical_format = "{:%H}\\n{:%M}";
-      };
-
-      # Date widget (vertical layout, showing day on top of month)
+      clock = {vertical_format = "{:%H}\\n{:%M}";};
       date = {
         type = "clock";
         vertical_format = "{:%d}\\n{:%m}";
         tooltip_format = "{:%A, %B %d, %Y}";
       };
-
       battery = {
         display_mode = "graphic";
         hide_when_plugged = true;
         show_label = false;
       };
-
-      brightness = {
-        show_label = false;
-      };
-
-      launcher = {
-        glyph = "rocket";
-      };
-
-      tray = {
-        drawer = true;
-      };
-
-      volume = {
-        show_label = false;
-      };
+      brightness = {show_label = false;};
+      launcher = {glyph = "rocket";};
+      tray = {drawer = true;};
+      volume = {show_label = false;};
     };
 
-    # ----------------------------------------------------------------------
-    # Wallpaper & Backdrop
-    # ----------------------------------------------------------------------
     wallpaper = {
       enabled = true;
-      directory = toString config.assets.wallpaperDir;
-      directory_light = toString config.assets.wallpaperDir;
-      directory_dark = toString config.assets.wallpaperDir;
+      directory = toString osConfig.assets.wallpaperDir;
+      directory_light = toString osConfig.assets.wallpaperDir;
+      directory_dark = toString osConfig.assets.wallpaperDir;
       transition = ["honeycomb" "stripes"];
       fill_mode = "crop";
     };
 
-    # ----------------------------------------------------------------------
-    # Hooks
-    # ----------------------------------------------------------------------
     hooks = {
       started = "noctalia msg wallpaper-random";
     };
 
-    # ----------------------------------------------------------------------
-    # Dock
-    # ----------------------------------------------------------------------
     dock = {
       enabled = true;
       auto_hide = true;
@@ -144,33 +96,17 @@
       radius = 0;
     };
 
-    # ----------------------------------------------------------------------
-    # Calendar & Location
-    # ----------------------------------------------------------------------
-    calendar = {
-      enabled = true;
-    };
+    calendar = {enabled = true;};
+    location = {auto_locate = true;};
 
-    location = {
-      auto_locate = true;
-    };
-
-    # ----------------------------------------------------------------------
-    # Audio
-    # ----------------------------------------------------------------------
     audio = {
       enable_sounds = true;
-      notification_sound = toString config.assets.notificationSound;
+      notification_sound = toString osConfig.assets.notificationSound;
       sound_volume = 1;
     };
 
-    # ----------------------------------------------------------------------
-    # Idle & Lock Behaviors
-    # ----------------------------------------------------------------------
     idle = {
-      # Delay before actions run, showing a fade overlay
       pre_action_fade_seconds = 2.0;
-
       behavior = {
         lock = {
           enabled = true;
@@ -186,9 +122,6 @@
       };
     };
 
-    # ----------------------------------------------------------------------
-    # Keybinds (Internal Shell Modifiers)
-    # ----------------------------------------------------------------------
     keybinds = {
       validate = ["Return"];
       cancel = ["Escape"];
@@ -198,12 +131,7 @@
       right = ["Right"];
     };
 
-    # ----------------------------------------------------------------------
-    # Widgets
-    # ----------------------------------------------------------------------
-    desktop_widgets = {
-      enabled = false;
-    };
+    desktop_widgets = {enabled = false;};
 
     lockscreen_widgets = {
       enabled = true;
@@ -239,9 +167,7 @@
           box_height = 88.0;
           box_width = 184.0;
           rotation = 0.0;
-          settings = {
-            background_radius = 0.0;
-          };
+          settings = {background_radius = 0.0;};
         };
         "lockscreen-widget-0000000000000002" = {
           type = "label";
@@ -280,7 +206,7 @@
           rotation = 0.0;
           settings = {
             background_radius = 0.0;
-            image_path = toString config.assets.avatarPicture;
+            image_path = toString osConfig.assets.avatarPicture;
             opacity = 1.0;
           };
         };

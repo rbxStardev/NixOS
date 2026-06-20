@@ -25,6 +25,10 @@
 
       # asusd manages fan curves, anime matrix, keyboard LEDs, and battery limits
       services.asusd.enable = true;
+
+      boot = {
+        kernelModules = ["asus_wmi"];
+      };
     };
   };
 }

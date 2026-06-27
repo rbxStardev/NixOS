@@ -45,6 +45,10 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
+
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+    };
   };
 
   outputs = inputs: let

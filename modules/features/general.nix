@@ -62,7 +62,6 @@
         selfpkgs.starship
         selfpkgs.bat
         selfpkgs.fastfetch
-        selfpkgs.tmux
 
         # Some other things
         pkgs.winetricks
@@ -71,6 +70,7 @@
         pkgs.qt6Packages.qtdeclarative
         pkgs.qt6Packages.qtsvg
         pkgs.qt6Packages.qtwayland
+        inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr
       ];
 
       environment.sessionVariables = {
@@ -92,6 +92,10 @@
 
       # Ensures ZSH functionality is available system-wide since it's wrapped
       programs.zsh.enable = true;
+      programs.zoxide = {
+        enable = true;
+        enableZshIntegration = true;
+      };
 
       # ==========================================================================
       # XDG portal

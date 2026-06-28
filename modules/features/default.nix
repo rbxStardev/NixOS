@@ -22,6 +22,7 @@
       self.nixosModules.sddm
       self.nixosModules.virtualization
       self.nixosModules.zerotierone
+      self.nixosModules.zeditor
     ];
   };
 }

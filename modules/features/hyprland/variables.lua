@@ -9,7 +9,7 @@ local variables = {
 	-- Apps
 	terminal = "uwsm app -- foot",
 	browser = "uwsm app -- firefox",
-	editor = "uwsm app -- hx",
+	editor = "uwsm app -- zeditor",
 	fileExplorer = "uwsm app -- yazi",
 
 	-- Touchpad Settings

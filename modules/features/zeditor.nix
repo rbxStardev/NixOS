@@ -85,6 +85,12 @@
         ".config/zed/settings.json".text = builtins.toJSON {
           base_keymap = "Emacs";
           vim_mode = true;
+          which_key = {
+            enabled = true;
+          };
+          vim = {
+            toggle_relative_line_numbers = true;
+          };
 
           icon_theme = {
             mode = "dark";

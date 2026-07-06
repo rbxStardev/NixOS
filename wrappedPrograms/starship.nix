@@ -13,18 +13,18 @@
     settings = {
       "$schema" = "https://starship.rs/config-schema.json";
 
+      add_newline = false;
+      format = "$username $directory $character";
       palette = "gruvbox";
 
-      format = "[░▒▓](p_main)[  ](bg:p_main fg:on_p_main)[](fg:p_main bg:dir_bg)$directory[](fg:dir_bg bg:git_bg)$git_branch$git_status[](fg:git_bg bg:lang_bg)$nix_shell$nodejs$rust$golang$php[](fg:lang_bg bg:time_bg)$time[ ](fg:time_bg)\n$character";
-
-      character = {
-        error_symbol = "[❯](bold red)";
-        success_symbol = "[❯](bold green)";
+      username = {
+        show_always = true;
+        format = "[$user]($style)";
       };
 
       directory = {
-        format = "[ $path ]($style)";
-        style = "fg:on_dir bg:dir_bg";
+        format = "[$path]($style)";
+        style = "fg:on_dir";
         truncation_length = 3;
         truncation_symbol = "…/";
         substitutions = {
@@ -36,56 +36,52 @@
         };
       };
 
+      character = {
+        # Starship 1.19-style config: no "symbol" key, only success/error/vim ones
+        format = "$symbol "; # use the module's symbol variable
+        success_symbol = "[λ](bold green)"; # shown on success
+        error_symbol = "[λ](bold red)"; # shown on error
+        vicmd_symbol = "λ"; # vim normal mode (if you use it)
+      };
+
+      # Disable git info
       git_branch = {
-        format = "[[ $symbol $branch ](fg:on_git bg:git_bg)]($style)";
-        style = "bg:git_bg";
-        symbol = "";
+        disabled = true;
       };
 
       git_status = {
-        format = "[[($all_status$ahead_behind )](fg:on_git bg:git_bg)]($style)";
-        style = "bg:git_bg";
+        disabled = true;
       };
 
-      nix_shell = {
-        format = "[[ $symbol ($state) ](fg:on_lang bg:lang_bg)]($style)";
-        impure_msg = "impure";
-        pure_msg = "pure";
-        style = "bg:lang_bg";
-        symbol = "";
+      # Disable language/version detectors (C, Python, node, etc.)
+      c = {
+        disabled = true;
       };
-
+      nodejs = {
+        disabled = true;
+      };
+      python = {
+        disabled = true;
+      };
       rust = {
-        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
-        style = "bg:lang_bg";
-        symbol = "";
+        disabled = true;
       };
-
-      dotnet = {
-        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
-        style = "bg:lang_bg";
-        symbol = "";
+      golang = {
+        disabled = true;
       };
-
-      lua = {
-        format = "[[ $symbol ($version) ](fg:on_lang bg:lang_bg)]($style)";
-        style = "bg:lang_bg";
-        symbol = "󰢱";
+      java = {
+        disabled = true;
       };
-
-      time = {
-        disabled = false;
-        format = "[[  $time ](fg:on_time bg:time_bg)]($style)";
-        style = "bg:time_bg";
-        time_format = "%R";
+      package = {
+        disabled = true;
       };
 
       palettes = {
         gruvbox = {
           p_main = "green";
           on_p_main = "black";
-          dir_bg = "yellow";
-          on_dir = "black";
+          dir_bg = "black";
+          on_dir = "white";
           git_bg = "blue";
           on_git = "black";
           lang_bg = "cyan";

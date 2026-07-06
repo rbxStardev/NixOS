@@ -7,9 +7,9 @@ local variables = {
 	-- ### Hyprland Core ###
 
 	-- Apps
-	terminal = "uwsm app -- foot",
+	terminal = "uwsm app -- kitty",
 	browser = "uwsm app -- firefox",
-	editor = "uwsm app -- zeditor",
+	editor = "uwsm app -- nvim",
 	fileExplorer = "uwsm app -- yazi",
 
 	-- Touchpad Settings

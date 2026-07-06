@@ -50,7 +50,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "opaque-apps",
 	match = {
-		class = "foot|equibop|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot",
+		class = "kitty|equibop|imv|swappy|krita|gimp|inkscape|darktable|resolve|kdenlive|shotcut|blender|godot",
 	},
 	opaque = true,
 })
@@ -88,8 +88,8 @@ hl.window_rule({
 
 -- Specific UI dimension rules
 hl.window_rule({
-	name = "nmtui-foot",
-	match = { class = "foot", title = "nmtui" },
+	name = "nmtui-kitty",
+	match = { class = "kitty", title = "nmtui" },
 	float = true,
 	size = "60% 70%",
 	center = true,

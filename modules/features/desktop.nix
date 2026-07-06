@@ -63,7 +63,7 @@
       security.polkit.enable = true;
 
       environment.etc."xdg/xdg-terminals.list".text = ''
-        foot.desktop
+        kitty.desktop
       '';
 
       environment.sessionVariables = {
@@ -73,7 +73,7 @@
         GDK_BACKEND = "wayland,x11";
         GTK_USE_PORTAL = "1";
         XMODIFIERS = "@im=fcitx";
-        TERMINAL = "foot";
+        TERMINAL = "kitty";
       };
 
       hardware = {

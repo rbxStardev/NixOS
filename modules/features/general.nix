@@ -54,9 +54,10 @@
         pkgs.lazygit
 
         # Custom wrappers provided by this flake
+        selfpkgs.jjui
+        selfpkgs.jujutsu
         selfpkgs.git
         selfpkgs.nix-check-bin
-        selfpkgs.helix
         selfpkgs.yazi
         selfpkgs.rmpc
         selfpkgs.starship
@@ -70,7 +71,6 @@
         pkgs.qt6Packages.qtdeclarative
         pkgs.qt6Packages.qtsvg
         pkgs.qt6Packages.qtwayland
-        inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.herdr
       ];
 
       environment.sessionVariables = {

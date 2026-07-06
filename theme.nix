@@ -23,7 +23,7 @@
     base0C = "#8ec07c"; # Cyan
     base0D = "#7daea3"; # Blue
     base0E = "#e089a1"; # Magenta
-    base0F = "#f28534"; # Brown / Dark Orange
+    base0F = "#f28534"; # Brown / DarkOrange
   };
 
   # Helper function to remove the '#' prefix from color hex codes,

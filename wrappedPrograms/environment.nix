@@ -18,10 +18,9 @@
   }: {
     # Wrapped terminal emulator explicitly bound to my wrapped shell
     packages.terminal =
-      (inputs.wrappers.wrapperModules.foot.apply {
+      (inputs.wrappers.wrapperModules.kitty.apply {
         inherit pkgs;
-        imports = [self.wrappersModules.foot];
-        shell = lib.getExe' self'.packages.environment "zsh";
+        imports = [self.wrappersModules.kitty];
       }).wrapper;
 
     # Core shell environment packed with developer tools
@@ -30,18 +29,8 @@
         inherit pkgs;
         package = self'.packages.zsh;
 
-        # Explicitly list runtime dependencies without using `with pkgs;`
-        runtimeInputs = [
-          pkgs.tombi
-          pkgs.lua-language-server
-          pkgs.luau-lsp
-          pkgs.stylua
-          pkgs.marksman
-          pkgs.vscode-json-languageserver
-        ];
-
         env = {
-          EDITOR = lib.getExe self'.packages.helix;
+          EDITOR = "nvim";
         };
       }).overrideAttrs (old: {
         meta = (old.meta or {}) // {mainProgram = "zsh";};

@@ -41,7 +41,7 @@
       zerotierone.enable = true;
       virtualization.enable = false;
       appimage.enable = true;
-      zeditor.enable = true;
+      nvf.enable = true;
     };
 
     hardware = {

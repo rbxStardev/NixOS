@@ -75,6 +75,9 @@
       # Run unpatched dynamic binaries on NixOS
       programs.nix-ld.enable = true;
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.config.permittedInsecurePackages = [
+        "pnpm-10.29.2"
+      ];
 
       environment.systemPackages = [
         pkgs.nil

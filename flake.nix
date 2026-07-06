@@ -46,8 +46,9 @@
       url = "github:noctalia-dev/noctalia";
     };
 
-    herdr = {
-      url = "github:ogulcancelik/herdr";
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

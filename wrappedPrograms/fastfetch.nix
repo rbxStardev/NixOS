@@ -2,8 +2,7 @@
 # FILE: wrappedPrograms/fastfetch.nix
 # ==============================================================================
 # Wraps the fastfetch CLI system information tool.
-# Injects a custom ASCII logo and configures the output layout to match the
-# Gruvbox theme provided by the global flake configuration.
+# Integrates a minimalist layout with custom NixOS/Gruvbox aesthetics.
 # ==============================================================================
 {
   self,
@@ -13,7 +12,6 @@
   flake.wrappersModules.fastfetch = {pkgs, ...}: let
     theme = self.theme;
 
-    # Custom ASCII logo defining color markers mapped to fastfetch JSON later
     customLogo = pkgs.writeText "fastfetch-logo.txt" ''
            $1_   $4___    _
           $1+o\  $4\  \  / \
@@ -37,7 +35,6 @@
       logo = {
         type = "file";
         source = "${customLogo}";
-        # Maps the $1, $2, $3, $4 markers in the ASCII art to our theme hex codes
         color = {
           "1" = theme.base0B; # Green
           "2" = theme.base0A; # Yellow
@@ -45,135 +42,102 @@
           "4" = theme.base05; # Normal Foreground
         };
         padding = {
-          top = 8;
-          left = 3;
+          top = 1;
+          left = 2;
           right = 4;
         };
       };
 
+      display = {
+        separator = "  ";
+        color = {
+          keys = "green";
+          title = "yellow";
+          output = "white";
+        };
+        key = {
+          width = 10;
+        };
+      };
+
       modules = [
-        "break"
         {
           type = "custom";
-          format = "┌──────────────────────Hardware───────────────────────┐";
+          format = "nixos // machine";
         }
         {
-          type = "host";
-          key = "󰌢  PC";
-          keyColor = "green";
-        }
-        {
-          type = "cpu";
-          key = "│ ├󰻠 ";
-          keyColor = "green";
-        }
-        {
-          type = "gpu";
-          key = "│ ├󰍹 ";
-          keyColor = "green";
-        }
-        {
-          type = "memory";
-          key = "│ ├󰑭 ";
-          keyColor = "green";
-        }
-        {
-          type = "disk";
-          key = "└ └󰋊 ";
-          keyColor = "green";
-        }
-        {
-          type = "custom";
-          format = "└─────────────────────────────────────────────────────┘";
-        }
-        "break"
-        {
-          type = "custom";
-          format = "┌──────────────────────Software───────────────────────┐";
+          type = "separator";
+          string = "----------------";
         }
         {
           type = "os";
-          key = "  OS";
-          keyColor = "yellow";
+          key = "distro";
         }
         {
           type = "kernel";
-          key = "│ ├󰌽 ";
-          keyColor = "yellow";
-        }
-        {
-          type = "bios";
-          key = "│ ├󰖡 ";
-          keyColor = "yellow";
-        }
-        {
-          type = "packages";
-          key = "│ ├󰏗 ";
-          keyColor = "yellow";
-        }
-        {
-          type = "shell";
-          key = "└ └󰞷 ";
-          keyColor = "yellow";
-        }
-        "break"
-        {
-          type = "de";
-          key = "󰧨  DE";
-          keyColor = "blue";
-        }
-        {
-          type = "lm";
-          key = "│ ├󰍁 ";
-          keyColor = "blue";
-        }
-        {
-          type = "wm";
-          key = "│ ├󱂬 ";
-          keyColor = "blue";
-        }
-        {
-          type = "wmtheme";
-          key = "│ ├󰉦 ";
-          keyColor = "blue";
-        }
-        {
-          type = "terminal";
-          key = "└ └󰆍 ";
-          keyColor = "blue";
-        }
-        {
-          type = "custom";
-          format = "└─────────────────────────────────────────────────────┘";
-        }
-        "break"
-        {
-          type = "custom";
-          format = "┌──────────────────Uptime / Age / DT──────────────────┐";
-        }
-        {
-          type = "command";
-          key = "  ›  OS Age  ";
-          keyColor = "magenta";
-          text = "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days";
+          key = "kernel";
         }
         {
           type = "uptime";
-          key = "  ›  Uptime  ";
-          keyColor = "magenta";
+          key = "uptime";
         }
         {
-          type = "datetime";
-          key = "  ›  DateTime  ";
-          keyColor = "magenta";
+          type = "packages";
+          key = "pkgs";
+          combined = true;
         }
         {
-          type = "custom";
-          format = "└─────────────────────────────────────────────────────┘";
+          type = "shell";
+          key = "shell";
         }
+        {
+          type = "de";
+          key = "desktop";
+        }
+        {
+          type = "wm";
+          key = "wm";
+        }
+        {
+          type = "terminal";
+          key = "term";
+        }
+        {
+          type = "cpu";
+          key = "cpu";
+          temp = false;
+          showPeCoreCount = false;
+        }
+        {
+          type = "gpu";
+          key = "gpu";
+          temp = false;
+        }
+        {
+          type = "memory";
+          key = "mem";
+        }
+        {
+          type = "disk";
+          key = "disk";
+          folders = "/";
+          showExternal = false;
+          showHidden = false;
+          showSubvolumes = false;
+          showReadOnly = false;
+        }
+        {
+          type = "battery";
+          key = "battery";
+        }
+        {
+          type = "locale";
+          key = "locale";
+        }
+        "break"
         {
           type = "colors";
-          paddingLeft = 2;
+          paddingLeft = 0;
           symbol = "circle";
         }
       ];
